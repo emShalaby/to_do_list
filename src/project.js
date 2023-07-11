@@ -1,4 +1,4 @@
-export  function project(name, tasks) {
+export  function projectGenerate(name, tasks) {
   function addTask(task) {
     this.tasks.push(task);
   }

@@ -27,3 +27,6 @@ export function pageLoad() {
   menu.appendChild(menuProjects);
   menuProjects.appendChild(menuTasks);
 }
+export function addProject(project){
+
+}
