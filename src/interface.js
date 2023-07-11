@@ -12,7 +12,7 @@ function headerLoad() {
   h1.textContent = "TO DO LIST";
   h1.id = "website-title";
   header.id = "header";
-  
+
   content.appendChild(header);
   header.appendChild(h1);
 }
@@ -40,6 +40,8 @@ function mainLoad() {
   main.appendChild(view);
   menu.appendChild(menuProjects);
   menuProjects.appendChild(menuTasks);
+  view.appendChild(viewProjects);
+  viewProjects.appendChild(viewTasks);
 }
 
 function footerLoad() {
