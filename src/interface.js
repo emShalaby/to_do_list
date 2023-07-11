@@ -64,5 +64,6 @@ function addProject(project) {
   const li = document.createElement("li");
 
   li.textContent = projectName;
-}
 
+  projectList.appendChild(li);
+}
