@@ -28,3 +28,9 @@
     gap: 2em;
     
 }
+#new-project>img{
+    height: .8em;
+}
+#new-project{
+    display: flex;
+}

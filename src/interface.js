@@ -1,3 +1,4 @@
+import img0 from "./172525_plus_icon.svg";
 export function pageLoad() {
   headerLoad();
   mainLoad();
@@ -30,6 +31,7 @@ function mainLoad() {
   const ul = document.createElement("ul");
   const projectsHeader = document.createElement("div");
   const newProjectDiv = document.createElement("div");
+  const img = new Image();
 
   main.id = "main";
   menu.id = "menu";
@@ -42,7 +44,8 @@ function mainLoad() {
   h5.textContent = "Projects";
   ul.id = "project-list";
   projectsHeader.id = "projects-header";
-  newProjectDiv.textContent = "new";
+  img.src = img0;
+  newProjectDiv.id = "new-project";
 
   content.appendChild(main);
   main.appendChild(menu);
@@ -52,6 +55,7 @@ function mainLoad() {
   menuProjects.appendChild(ul);
   projectsHeader.appendChild(h5);
   projectsHeader.appendChild(newProjectDiv);
+  newProjectDiv.appendChild(img);
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
 }
