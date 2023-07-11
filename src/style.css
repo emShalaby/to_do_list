@@ -1,3 +1,16 @@
+#main{
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
 #menu{
-    display: flex;
+    /* for debugging */
+    border: solid 1px black;
+    height: 100vh;
+    width: 30vh;
+}
+
+#view{
+    /* for debugging */
+    border: solid 1px black;
 }
