@@ -26,6 +26,7 @@ function mainLoad() {
   const viewProjects = document.createElement("div");
   const viewTasks = document.createElement("div");
   const content = document.querySelector("#content");
+  const h2 = document.createElement("h2");
 
   main.id = "main";
   menu.id = "menu";
@@ -34,11 +35,14 @@ function mainLoad() {
   menuTasks.id = "menu-tasks";
   viewProjects.id = "view-projects";
   viewTasks.id = "view-tasks";
+  h2.id = "projects-title";
+  h2.textContent="Projects"
 
   content.appendChild(main);
   main.appendChild(menu);
   main.appendChild(view);
   menu.appendChild(menuProjects);
+  menuProjects.appendChild(h2);
   menuProjects.appendChild(menuTasks);
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
@@ -50,3 +54,5 @@ function footerLoad() {
   footer.id = "footer";
   content.appendChild(footer);
 }
+
+function addProject(project) {}
