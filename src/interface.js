@@ -27,6 +27,7 @@ function mainLoad() {
   const viewTasks = document.createElement("div");
   const content = document.querySelector("#content");
   const h2 = document.createElement("h2");
+  const ul = document.createElement("ul");
 
   main.id = "main";
   menu.id = "menu";
@@ -36,14 +37,16 @@ function mainLoad() {
   viewProjects.id = "view-projects";
   viewTasks.id = "view-tasks";
   h2.id = "projects-title";
-  h2.textContent="Projects"
+  h2.textContent = "Projects";
+  ul.id = "project-list";
 
   content.appendChild(main);
   main.appendChild(menu);
   main.appendChild(view);
   menu.appendChild(menuProjects);
   menuProjects.appendChild(h2);
-  menuProjects.appendChild(menuTasks);
+  menuProjects.appendChild(ul);
+
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
 }
@@ -55,4 +58,11 @@ function footerLoad() {
   content.appendChild(footer);
 }
 
-function addProject(project) {}
+function addProject(project) {
+  const projectList = document.querySelector("#projects-list");
+  const projectName = project.name;
+  const li = document.createElement("li");
+
+  li.textContent = projectName;
+}
+
