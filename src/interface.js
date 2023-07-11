@@ -17,6 +17,13 @@ export function pageLoad() {
   main.id = "main";
   footer.id = "footer";
   h1.textContent = "TO DO LIST";
+  h1.id = "website-title";
+  menu.id = "menu";
+  view.id = "view";
+  menuProjects.id = "menu-projects";
+  menuTasks.id = "menu-tasks";
+  viewProjects.id = "view-projects";
+  viewTasks.id = "view-tasks";
 
   content.appendChild(header);
   content.appendChild(main);
@@ -27,6 +34,4 @@ export function pageLoad() {
   menu.appendChild(menuProjects);
   menuProjects.appendChild(menuTasks);
 }
-export function addProject(project){
-
-}
+export function addProject(project) {}
