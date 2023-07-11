@@ -1,4 +1,4 @@
-export default function pageLoad() {
+export  function pageLoad() {
   const header = document.createElement("div");
   const main = document.createElement("div");
   const footer = document.createElement("div");
@@ -8,7 +8,7 @@ export default function pageLoad() {
   main.id = "main";
   footer.id = "footer";
 
-  content.appendChild("header");
-  content.appendChild("main");
-  content.appendChild("footer");
+  content.appendChild(header);
+  content.appendChild(main);
+  content.appendChild(footer);
 }

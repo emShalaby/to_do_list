@@ -1,4 +1,4 @@
-export default function project(name, tasks) {
+export  function project(name, tasks) {
   function addTask(task) {
     this.tasks.push(task);
   }
