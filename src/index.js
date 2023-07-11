@@ -1,6 +1,7 @@
 import { pageLoad } from "./interface.js";
 import "./style.css";
-import { projectGenerate } from "./project";
+import { addEvents } from "./events.js";
+import { pageLoad } from "./interface.js";
 
 pageLoad();
-window.projectGenerate = projectGenerate;
+addEvents();
