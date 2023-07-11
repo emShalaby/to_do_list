@@ -59,7 +59,7 @@ function footerLoad() {
 }
 
 function addProject(project) {
-  const projectList = document.querySelector("#projects-list");
+  const projectList = document.querySelector("#project-list");
   const projectName = project.name;
   const li = document.createElement("li");
 
@@ -67,3 +67,5 @@ function addProject(project) {
 
   projectList.appendChild(li);
 }
+
+window.addProject = addProject;
