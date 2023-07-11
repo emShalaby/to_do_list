@@ -6,6 +6,12 @@ export function pageLoad() {
   const h1 = document.createElement("h1");
   const menu = document.createElement("div");
   const view = document.createElement("div");
+  //menuProjects and menuTasks for how they appear on the menu div
+  const menuProjects = document.createElement("div");
+  const menuTasks = document.createElement("div");
+  // viewProjects and viewtasks for how they appear on the view div
+  const viewProjects = document.createElement("div");
+  const viewTasks = document.createElement("div");
 
   header.id = "header";
   main.id = "main";
@@ -18,4 +24,6 @@ export function pageLoad() {
   header.appendChild(h1);
   main.appendChild(menu);
   main.appendChild(view);
+  menu.appendChild(menuProjects);
+  menuProjects.appendChild(menuTasks);
 }
