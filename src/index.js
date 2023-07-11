@@ -10,5 +10,5 @@ function project(name, tasks) {
   }
   return { name, tasks, addTask, deleteTask };
 }
-window.task = task;
-window.project = project;
+
+
