@@ -28,6 +28,7 @@ function mainLoad() {
   const content = document.querySelector("#content");
   const h2 = document.createElement("h2");
   const ul = document.createElement("ul");
+  const projectsHeader = document.createElement("div");
 
   main.id = "main";
   menu.id = "menu";
@@ -39,14 +40,15 @@ function mainLoad() {
   h2.id = "projects-title";
   h2.textContent = "Projects";
   ul.id = "project-list";
+  projectsHeader.id = "projects-header";
 
   content.appendChild(main);
   main.appendChild(menu);
   main.appendChild(view);
   menu.appendChild(menuProjects);
-  menuProjects.appendChild(h2);
+  menuProjects.appendChild(projectsHeader);
   menuProjects.appendChild(ul);
-
+  projectsHeader.appendChild(h2);
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
 }
