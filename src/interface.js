@@ -60,14 +60,18 @@ function mainLoad() {
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
   
-  if (localStorage["projects"]) {
-    const projects = Array.from(JSON.parse(localStorage.getItem("projects")));
-    projects.forEach((element) => {
-      const li = document.createElement("li");
-      li.textContent = element.name;
-      ul.appendChild(li);
-    });
+  function loadStoredProjects() {
+    if (localStorage["projects"]) {
+      const projects = Array.from(JSON.parse(localStorage.getItem("projects")));
+      projects.forEach((element) => {
+        const li = document.createElement("li");
+        li.textContent = element.name;
+        ul.appendChild(li);
+      });
+    }
   }
+  
+  loadStoredProjects();
 }
 
 function footerLoad() {
