@@ -26,4 +26,5 @@ export function getProjects() {
     projects.splice(projects.indexOf(project), 1);
     projects.push(projectGenerate(project.name, project.tasks));
   });
+  return projects;
 }
