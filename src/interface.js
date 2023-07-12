@@ -1,6 +1,7 @@
 import img0 from "./172525_plus_icon.svg";
 import img1 from "./three-dots-punctuation-sign-svgrepo-com.svg";
 import img2 from "./icons8-project-30.png";
+import img3 from "./trash-icon.png";
 
 export function pageLoad() {
   headerLoad();
@@ -87,15 +88,20 @@ export function addProject(project) {
   const editIcon = new Image();
   const projectIcon = new Image();
   const ul = document.querySelector("#project-list");
+  const deleteIcon = new Image();
+
   projectIcon.src = img2;
   projectIcon.classList.add("project-icon");
   editIcon.classList.add("edit-icon");
   editIcon.src = img1;
+  deleteIcon.classList.add("delete-icon");
+  deleteIcon.src = img3;
 
   li.classList.add("project");
   p.textContent = project.name;
   li.appendChild(projectIcon);
   li.appendChild(p);
   li.appendChild(editIcon);
+  li.appendChild(deleteIcon);
   ul.appendChild(li);
 }
