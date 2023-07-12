@@ -36,7 +36,7 @@
     border: solid hotpink 2px;
  
 }
-#new-project>img{
+#new-project>img,#view-add-task>img{
     height: .8em;
 }
 #new-project{
@@ -84,4 +84,12 @@ input{
 #view-header{
     display: flex;
     justify-content: center;
+    border-bottom: solid 2px pink;
+}
+
+#view-add-task{
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    gap: 1em;
 }

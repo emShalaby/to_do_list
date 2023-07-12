@@ -224,14 +224,27 @@ function showActiveProject(projectName) {
   const viewHeader = document.createElement("div");
   const viewMain = document.createElement("div");
   const view = document.querySelector("#view");
+  const taskList = document.createElement("ul");
+  const addTaskIcon = new Image();
+  const addNewTask = document.createElement("div");
+  const p = document.createElement("p");
 
   viewHeader.id = "view-header";
   viewMain.id = "view-main";
   h2.textContent = project.name;
+  taskList.id = "#view-task-list";
+  addTaskIcon.id = "add-task-icon";
+  addTaskIcon.src = img0;
+  p.textContent = "New task";
+  addNewTask.id = "view-add-task";
 
   view.appendChild(viewHeader);
   view.appendChild(viewMain);
   viewHeader.appendChild(h2);
+  viewMain.appendChild(taskList);
+  taskList.appendChild(addNewTask);
+  addNewTask.appendChild(addTaskIcon);
+  addNewTask.appendChild(p);
 }
 
 //function to load stored projects into their elements
