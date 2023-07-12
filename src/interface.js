@@ -6,14 +6,17 @@ import { getProjects } from "./storage";
 import { projectGenerate } from "./project";
 import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
+import { getProjectByName } from "./storage";
 export function pageLoad() {
   headerLoad();
   newProjectModal();
   mainLoad();
   menuLoad();
+  viewLoad();
   footerLoad();
-
 }
+
+// website header
 
 function headerLoad() {
   const header = document.createElement("div");
@@ -28,27 +31,19 @@ function headerLoad() {
   header.appendChild(h1);
 }
 
+// website main
+
 export function mainLoad() {
   const main = document.createElement("div");
-  const view = document.createElement("div");
 
-  const viewProjects = document.createElement("div");
-  const viewTasks = document.createElement("div");
   const content = document.querySelector("#content");
 
   main.id = "main";
 
-  view.id = "view";
-
-  viewProjects.id = "view-projects";
-  viewTasks.id = "view-tasks";
-
   content.appendChild(main);
-
-  main.appendChild(view);
-
-  viewProjects.appendChild(viewTasks);
 }
+
+//website footer
 
 function footerLoad() {
   const footer = document.createElement("div");
@@ -56,6 +51,8 @@ function footerLoad() {
   footer.id = "footer";
   content.appendChild(footer);
 }
+
+//side menu inside main
 
 function menuLoad() {
   const menu = document.createElement("div");
@@ -96,6 +93,22 @@ function menuLoad() {
   projectsHeader.addEventListener("click", showViewProjects);
 }
 
+//right view area inside main
+
+function viewLoad() {
+  const view = document.createElement("div");
+  const viewProjects = document.createElement("div");
+  const viewTasks = document.createElement("div");
+  const main = document.querySelector("#main");
+
+  view.id = "view";
+  viewProjects.id = "view-projects";
+  viewTasks.id = "view-tasks";
+  main.appendChild(view);
+  viewProjects.appendChild(viewTasks);
+}
+
+//function too add a project to DOM
 
 export function addProject(project) {
   const li = document.createElement("li");
@@ -126,6 +139,8 @@ export function addProject(project) {
   });
 }
 
+//modal for adding a new project
+
 function newProjectModal() {
   const modal = document.createElement("div");
   const content = document.querySelector("#content");
@@ -155,6 +170,8 @@ function newProjectModal() {
     storeProjects(projectGenerate(input.value, []));
   });
 }
+
+// function to show projects in the view area
 
 function showViewProjects() {
   if (document.querySelector("#view-header"))
@@ -191,6 +208,6 @@ function showViewProjects() {
   });
 }
 
-function showActiveProject() {}
+//function to show the current project thats being clicked on
 
-
+function showActiveProject(proj) {}

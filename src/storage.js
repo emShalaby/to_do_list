@@ -25,4 +25,9 @@ export function getProjects() {
   return projects;
 }
 
-
+export function getProjectByName(projName) {
+  let projects = getProjects();
+  projects.forEach((project) => {
+    if (project.name == projName) return project;
+  });
+}
