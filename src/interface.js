@@ -59,8 +59,9 @@ function mainLoad() {
   newProjectDiv.appendChild(img);
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
-  if (localStorage.getItem("projects")) {
-    const projects = JSON.parse(localStorage.getItem("projects"));
+  
+  if (localStorage["projects"]) {
+    const projects = Array.from(JSON.parse(localStorage.getItem("projects")));
     projects.forEach((element) => {
       const li = document.createElement("li");
       li.textContent = element.name;
