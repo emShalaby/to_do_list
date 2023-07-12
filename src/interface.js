@@ -66,21 +66,7 @@ function mainLoad() {
     if (localStorage["projects"]) {
       const projects = Array.from(JSON.parse(localStorage.getItem("projects")));
       projects.forEach((element) => {
-        const li = document.createElement("li");
-        const p = document.createElement("p");
-        const editIcon = new Image();
-        const projectIcon = new Image();
-        projectIcon.src = img2;
-        projectIcon.classList.add("project-icon");
-        editIcon.classList.add("edit-icon");
-        editIcon.src = img1;
-
-        li.classList.add("project");
-        p.textContent = element.name;
-        li.appendChild(projectIcon);
-        li.appendChild(p);
-        li.appendChild(editIcon);
-        ul.appendChild(li);
+        addProject(element);
       });
     }
   }
@@ -96,11 +82,20 @@ function footerLoad() {
 }
 
 export function addProject(project) {
-  const projectList = document.querySelector("#project-list");
-  const projectName = project.name;
   const li = document.createElement("li");
+  const p = document.createElement("p");
+  const editIcon = new Image();
+  const projectIcon = new Image();
+  const ul = document.querySelector("#project-list");
+  projectIcon.src = img2;
+  projectIcon.classList.add("project-icon");
+  editIcon.classList.add("edit-icon");
+  editIcon.src = img1;
 
-  li.textContent = projectName;
-
-  projectList.appendChild(li);
+  li.classList.add("project");
+  p.textContent = project.name;
+  li.appendChild(projectIcon);
+  li.appendChild(p);
+  li.appendChild(editIcon);
+  ul.appendChild(li);
 }
