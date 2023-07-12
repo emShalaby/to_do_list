@@ -9,4 +9,3 @@ export function projectGenerate(name, tasks) {
   storeProjects({ name, tasks });
   return { name, tasks, addTask, deleteTask };
 }
-export default projects;
