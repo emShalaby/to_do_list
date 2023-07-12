@@ -6,6 +6,7 @@
 #main{
     display: grid;
     grid-template-columns: 1fr 5fr;
+    border: solid hotpink 2px;
 }
 
 
@@ -14,11 +15,13 @@
     /* for debugging */
     border: solid 1px black;
     padding-left: 2em;
+    
 }
 
 #view{
     /* for debugging */
     border: solid 1px black;
+    
 }
 
 #projects-header{
@@ -30,7 +33,7 @@
     margin-left: -1.2em ;
     padding: .5em;
     gap: 1em;
-    
+    border: solid hotpink 2px;
  
 }
 #new-project>img{
@@ -38,6 +41,7 @@
 }
 #new-project{
     display: flex;
+    border: solid hotpink 2px;
 }
 .edit-icon{
     height: 10px;
@@ -59,7 +63,8 @@ li{
     margin-right: .5em;
     margin-bottom: .5em;
     margin-top: .5em;
-    gap: .5em
+    gap: .5em;
+    border: solid hotpink 2px;
 }
 
 #new-project-modal{
@@ -74,4 +79,9 @@ li{
 }
 input{
     margin-bottom: 2em;
+}
+
+#view-header{
+    display: flex;
+    justify-content: center;
 }

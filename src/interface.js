@@ -27,7 +27,6 @@ function headerLoad() {
 }
 
 export function mainLoad() {
-  if (document.querySelector("#main")) document.querySelector("#main").remove();
   const main = document.createElement("div");
   const menu = document.createElement("div");
   const view = document.createElement("div");
@@ -75,6 +74,7 @@ export function mainLoad() {
     const modal = document.querySelector("#new-project-modal");
     modal.style.display = "flex";
   });
+  projectsHeader.addEventListener("click", showViewProjects);
 }
 
 function footerLoad() {
@@ -141,4 +141,43 @@ function newProjectModal() {
     addProject(projectGenerate(input.value, []));
     storeProjects(projectGenerate(input.value, []));
   });
+}
+
+function showViewProjects() {
+  if (document.querySelector("#view-header"))
+    document.querySelector("#view-header").remove();
+  if (document.querySelector("#view-main"))
+    document.querySelector("#view-main").remove();
+  const projects = getProjects();
+
+  const viewHeader = document.createElement("div");
+  const h2 = document.createElement("h2");
+  const view = document.querySelector("#view");
+  const projectList = document.createElement("ul");
+  const main = document.createElement("div");
+
+  viewHeader.id = "view-header";
+  h2.textContent = "Projects";
+  projectList.id = "view-project-list";
+  main.id = "view-main";
+
+  view.appendChild(viewHeader);
+  viewHeader.appendChild(h2);
+  main.appendChild(projectList);
+  view.appendChild(main);
+
+  if (projects.length == 0) return;
+  projects.forEach((proj) => {
+    const li = document.createElement("li");
+    const p = document.createElement("p");
+
+    p.textContent = proj.name;
+
+    projectList.appendChild(li);
+    li.appendChild(p);
+  });
+}
+
+function showActiveProject(){
+
 }
