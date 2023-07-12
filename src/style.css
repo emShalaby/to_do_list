@@ -11,7 +11,7 @@
 #menu{
     /* for debugging */
     border: solid 1px black;
-    height: 100vh;
+    padding-left: 2em;
 }
 
 #view{
@@ -24,10 +24,12 @@
     flex: 1;
     align-items: center;
     justify-content: space-between;
-    
-    padding: .5em;
     margin: .5em;
-    gap: .5em;    
+    margin-left: -1.2em ;
+    padding: .5em;
+    gap: 1em;
+    
+ 
 }
 #new-project>img{
     height: .8em;
