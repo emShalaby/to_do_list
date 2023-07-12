@@ -169,6 +169,7 @@ function newProjectModal() {
     modal.style.display = "none";
     addProject(projectGenerate(input.value, []));
     storeProjects(projectGenerate(input.value, []));
+    showActiveProject(input.value);
   });
 }
 
@@ -211,13 +212,13 @@ function showViewProjects() {
 
 //function to show the current project thats being clicked on
 
-function showActiveProject(id) {
+function showActiveProject(projectName) {
   if (document.querySelector("#view-header"))
     document.querySelector("#view-header").remove();
   if (document.querySelector("#view-main"))
     document.querySelector("#view-main").remove();
 
-  let project = getProjectByName(id);
+  let project = getProjectByName(projectName);
 
   const h2 = document.createElement("h2");
   const viewHeader = document.createElement("div");
