@@ -2,8 +2,9 @@ import img0 from "./172525_plus_icon.svg";
 import img1 from "./three-dots-punctuation-sign-svgrepo-com.svg";
 import img2 from "./icons8-project-30.png";
 import img3 from "./trash-icon.png";
-import { addEvents } from "./events";
-
+import { getProjects } from "./storage";
+import { projectGenerate } from "./project";
+import { storeProjects } from "./storage";
 export function pageLoad() {
   headerLoad();
   mainLoad();
@@ -65,18 +66,13 @@ export function mainLoad() {
   newProjectDiv.appendChild(img);
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
+  let projects = getProjects();
+  projects.forEach((proj) => addProject(proj));
 
-  function loadStoredProjects() {
-    if (localStorage["projects"]) {
-      const projects = Array.from(JSON.parse(localStorage.getItem("projects")));
-      projects.forEach((element) => {
-        addProject(element);
-      });
-    }
-  }
-
-  loadStoredProjects();
-  addEvents();
+  newProjectDiv.addEventListener("click", () => {
+    addProject(projectGenerate("name", []));
+    storeProjects(projectGenerate("name", []));
+  });
 }
 
 function footerLoad() {
@@ -87,7 +83,6 @@ function footerLoad() {
 }
 
 export function addProject(project) {
-
   const li = document.createElement("li");
   const p = document.createElement("p");
   const editIcon = new Image();
@@ -110,6 +105,4 @@ export function addProject(project) {
   li.appendChild(editIcon);
   li.appendChild(deleteIcon);
   ul.appendChild(li);
-
-  addEvents();
 }

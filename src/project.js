@@ -6,6 +6,7 @@ export function projectGenerate(name, tasks) {
   function deleteTask(task) {
     this.tasks.splice(this.tasks.indexOf(task), 1);
   }
-  storeProjects({ name, tasks });
   return { name, tasks, addTask, deleteTask };
 }
+
+window.projectGenerate = projectGenerate;
