@@ -1,4 +1,3 @@
-import { storeProjects } from "./storage.js";
 export function projectGenerate(name, tasks) {
   function addTask(task) {
     this.tasks.push(task);
@@ -9,4 +8,3 @@ export function projectGenerate(name, tasks) {
   return { name, tasks, addTask, deleteTask };
 }
 
-window.projectGenerate = projectGenerate;
