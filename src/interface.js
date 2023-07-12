@@ -73,7 +73,7 @@ export function mainLoad() {
 
   newProjectDiv.addEventListener("click", () => {
     const modal = document.querySelector("#new-project-modal");
-    modal.style.display = "block";
+    modal.style.display = "flex";
   });
 }
 
@@ -118,14 +118,19 @@ function newProjectModal() {
   const content = document.querySelector("#content");
   const input = document.createElement("input");
   const submitBtn = document.createElement("button");
+  const label = document.createElement("label");
 
   modal.id = "new-project-modal";
   input.id = "new-project-name";
   input.type = "text";
+  input.name = "new-project-name";
   submitBtn.type = "submit";
   submitBtn.id = "new-project-submit";
   submitBtn.textContent = "Create";
+  label.for = input.name;
+  label.innerHTML = "<b>Name</b>";
 
+  modal.appendChild(label);
   modal.appendChild(input);
   modal.appendChild(submitBtn);
   content.appendChild(modal);

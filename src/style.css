@@ -61,3 +61,17 @@ li{
     margin-top: .5em;
     gap: .5em
 }
+
+#new-project-modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    padding: 1em;
+    gap: .1em;
+
+}
+input{
+    margin-bottom: 2em;
+}
