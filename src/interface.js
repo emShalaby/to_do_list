@@ -8,6 +8,7 @@ import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
 export function pageLoad() {
   headerLoad();
+  newProjectModal();
   mainLoad();
   footerLoad();
 }
@@ -73,6 +74,8 @@ export function mainLoad() {
   newProjectDiv.addEventListener("click", () => {
     addProject(projectGenerate("name", []));
     storeProjects(projectGenerate("name", []));
+    const modal = document.querySelector("#new-project-modal");
+    modal.style.display = "block";
   });
 }
 
@@ -86,11 +89,10 @@ function footerLoad() {
 export function addProject(project) {
   const li = document.createElement("li");
   const p = document.createElement("p");
-  const editIcon = new Image();
   const projectIcon = new Image();
-  const ul = document.querySelector("#project-list");
+  const editIcon = new Image();
   const deleteIcon = new Image();
-
+  const ul = document.querySelector("#project-list");
   projectIcon.src = img2;
   projectIcon.classList.add("project-icon");
   editIcon.classList.add("edit-icon");
@@ -111,4 +113,25 @@ export function addProject(project) {
     deleteProjects(deleteIcon.parentNode.id);
     deleteIcon.parentNode.remove();
   });
+}
+
+function newProjectModal() {
+  const modal = document.createElement("div");
+  const content = document.querySelector("#content");
+  const input = document.createElement("input");
+  const submitBtn = document.createElement("button");
+
+  modal.id = "new-project-modal";
+  input.id = "new-project-name";
+  input.type = "text";
+  submitBtn.type = "submit";
+  submitBtn.id = "new-project-submit";
+  submitBtn.textContent = "Create";
+
+  modal.appendChild(input);
+  modal.appendChild(submitBtn);
+  content.appendChild(modal);
+  modal.style.display = "none";
+
+  submitBtn.addEventListener("click", () => (modal.style.display = "none"));
 }
