@@ -1,5 +1,6 @@
 import img0 from "./172525_plus_icon.svg";
 import img1 from "./three-dots-punctuation-sign-svgrepo-com.svg";
+import img2 from "./icons8-project-30.png";
 
 export function pageLoad() {
   headerLoad();
@@ -35,7 +36,6 @@ function mainLoad() {
   const newProjectDiv = document.createElement("div");
   const img = new Image();
 
-
   main.id = "main";
   menu.id = "menu";
   view.id = "view";
@@ -49,8 +49,6 @@ function mainLoad() {
   projectsHeader.id = "projects-header";
   img.src = img0;
   newProjectDiv.id = "new-project";
-
-  
 
   content.appendChild(main);
   main.appendChild(menu);
@@ -71,11 +69,15 @@ function mainLoad() {
         const li = document.createElement("li");
         const p = document.createElement("p");
         const editIcon = new Image();
+        const projectIcon = new Image();
+        projectIcon.src = img2;
+        projectIcon.classList.add("project-icon");
         editIcon.classList.add("edit-icon");
         editIcon.src = img1;
 
         li.classList.add("project");
         p.textContent = element.name;
+        li.appendChild(projectIcon);
         li.appendChild(p);
         li.appendChild(editIcon);
         ul.appendChild(li);
