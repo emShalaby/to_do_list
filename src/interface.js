@@ -34,7 +34,7 @@ function headerLoad() {
 
 // website main
 
-export function mainLoad() {
+function mainLoad() {
   const main = document.createElement("div");
 
   const content = document.querySelector("#content");
@@ -84,8 +84,6 @@ function menuLoad() {
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
 
-
-
   newProjectDiv.addEventListener("click", () => {
     const modal = document.querySelector("#new-project-modal");
     modal.style.display = "flex";
@@ -110,7 +108,7 @@ function viewLoad() {
 
 //function too add a project to DOM
 
-export function addProject(project) {
+function addProject(project) {
   const li = document.createElement("li");
   const p = document.createElement("p");
   const projectIcon = new Image();
