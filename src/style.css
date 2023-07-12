@@ -8,6 +8,8 @@
     grid-template-columns: 1fr 5fr;
 }
 
+
+
 #menu{
     /* for debugging */
     border: solid 1px black;
@@ -36,4 +38,16 @@
 }
 #new-project{
     display: flex;
+}
+.edit-icon{
+    height: 10px;
+    width: 10px;
+}
+
+li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin: .5em;
 }

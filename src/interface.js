@@ -1,4 +1,5 @@
 import img0 from "./172525_plus_icon.svg";
+import img1 from "./three-dots-punctuation-sign-svgrepo-com.svg";
 
 export function pageLoad() {
   headerLoad();
@@ -34,6 +35,7 @@ function mainLoad() {
   const newProjectDiv = document.createElement("div");
   const img = new Image();
 
+
   main.id = "main";
   menu.id = "menu";
   view.id = "view";
@@ -48,6 +50,8 @@ function mainLoad() {
   img.src = img0;
   newProjectDiv.id = "new-project";
 
+  
+
   content.appendChild(main);
   main.appendChild(menu);
   main.appendChild(view);
@@ -59,18 +63,26 @@ function mainLoad() {
   newProjectDiv.appendChild(img);
   view.appendChild(viewProjects);
   viewProjects.appendChild(viewTasks);
-  
+
   function loadStoredProjects() {
     if (localStorage["projects"]) {
       const projects = Array.from(JSON.parse(localStorage.getItem("projects")));
       projects.forEach((element) => {
         const li = document.createElement("li");
-        li.textContent = element.name;
+        const p = document.createElement("p");
+        const editIcon = new Image();
+        editIcon.classList.add("edit-icon");
+        editIcon.src = img1;
+
+        li.classList.add("project");
+        p.textContent = element.name;
+        li.appendChild(p);
+        li.appendChild(editIcon);
         ul.appendChild(li);
       });
     }
   }
-  
+
   loadStoredProjects();
 }
 
