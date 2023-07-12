@@ -136,6 +136,8 @@ function addProject(project) {
     deleteProjects(deleteIcon.parentNode.id);
     deleteIcon.parentNode.remove();
   });
+
+  li.addEventListener("click", () => showActiveProject(li.id));
 }
 
 //modal for adding a new project
@@ -209,7 +211,27 @@ function showViewProjects() {
 
 //function to show the current project thats being clicked on
 
-function showActiveProject(proj) {}
+function showActiveProject(id) {
+  if (document.querySelector("#view-header"))
+    document.querySelector("#view-header").remove();
+  if (document.querySelector("#view-main"))
+    document.querySelector("#view-main").remove();
+
+  let project = getProjectByName(id);
+
+  const h2 = document.createElement("h2");
+  const viewHeader = document.createElement("div");
+  const viewMain = document.createElement("div");
+  const view = document.querySelector("#view");
+
+  viewHeader.id = "view-header";
+  viewMain.id = "view-main";
+  h2.textContent = project.name;
+
+  view.appendChild(viewHeader);
+  view.appendChild(viewMain);
+  viewHeader.appendChild(h2);
+}
 
 //function to load stored projects into their elements
 
