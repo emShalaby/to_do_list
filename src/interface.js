@@ -2,6 +2,7 @@ import img0 from "./172525_plus_icon.svg";
 import img1 from "./three-dots-punctuation-sign-svgrepo-com.svg";
 import img2 from "./icons8-project-30.png";
 import img3 from "./trash-icon.png";
+import { addEvents } from "./events";
 
 export function pageLoad() {
   headerLoad();
@@ -22,7 +23,8 @@ function headerLoad() {
   header.appendChild(h1);
 }
 
-function mainLoad() {
+export function mainLoad() {
+  if (document.querySelector("#main")) document.querySelector("#main").remove();
   const main = document.createElement("div");
   const menu = document.createElement("div");
   const view = document.createElement("div");
@@ -32,10 +34,10 @@ function mainLoad() {
   const viewTasks = document.createElement("div");
   const content = document.querySelector("#content");
   const h5 = document.createElement("h5");
+  const img = new Image();
   const ul = document.createElement("ul");
   const projectsHeader = document.createElement("div");
   const newProjectDiv = document.createElement("div");
-  const img = new Image();
 
   main.id = "main";
   menu.id = "menu";
@@ -51,12 +53,13 @@ function mainLoad() {
   img.src = img0;
   newProjectDiv.id = "new-project";
 
+  menuProjects.appendChild(ul);
   content.appendChild(main);
   main.appendChild(menu);
   main.appendChild(view);
   menu.appendChild(menuProjects);
-  menuProjects.appendChild(projectsHeader);
-  menuProjects.appendChild(ul);
+  menuProjects.prepend(projectsHeader);
+
   projectsHeader.appendChild(h5);
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
@@ -73,6 +76,7 @@ function mainLoad() {
   }
 
   loadStoredProjects();
+  addEvents();
 }
 
 function footerLoad() {
@@ -83,6 +87,7 @@ function footerLoad() {
 }
 
 export function addProject(project) {
+
   const li = document.createElement("li");
   const p = document.createElement("p");
   const editIcon = new Image();
@@ -96,6 +101,7 @@ export function addProject(project) {
   editIcon.src = img1;
   deleteIcon.classList.add("delete-icon");
   deleteIcon.src = img3;
+  li.id = project.name;
 
   li.classList.add("project");
   p.textContent = project.name;
@@ -104,4 +110,6 @@ export function addProject(project) {
   li.appendChild(editIcon);
   li.appendChild(deleteIcon);
   ul.appendChild(li);
+
+  addEvents();
 }
