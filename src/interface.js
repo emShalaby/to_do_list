@@ -72,8 +72,6 @@ export function mainLoad() {
   projects.forEach((proj) => addProject(proj));
 
   newProjectDiv.addEventListener("click", () => {
-    addProject(projectGenerate("name", []));
-    storeProjects(projectGenerate("name", []));
     const modal = document.querySelector("#new-project-modal");
     modal.style.display = "block";
   });
@@ -133,5 +131,9 @@ function newProjectModal() {
   content.appendChild(modal);
   modal.style.display = "none";
 
-  submitBtn.addEventListener("click", () => (modal.style.display = "none"));
+  submitBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    addProject(projectGenerate(input.value, []));
+    storeProjects(projectGenerate(input.value, []));
+  });
 }
