@@ -9,11 +9,12 @@ import { deleteProjects } from "./storage";
 import { getProjectByName } from "./storage";
 export function pageLoad() {
   headerLoad();
-  newProjectModal();
   mainLoad();
+  newProjectModal();
   menuLoad();
   viewLoad();
   footerLoad();
+  loadStoredProjects();
 }
 
 // website header
@@ -83,8 +84,7 @@ function menuLoad() {
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
 
-  let projects = getProjects();
-  projects.forEach((proj) => addProject(proj));
+
 
   newProjectDiv.addEventListener("click", () => {
     const modal = document.querySelector("#new-project-modal");
@@ -111,7 +111,6 @@ function viewLoad() {
 //function too add a project to DOM
 
 export function addProject(project) {
-  
   const li = document.createElement("li");
   const p = document.createElement("p");
   const projectIcon = new Image();
@@ -218,5 +217,7 @@ function showActiveProject(proj) {}
 
 function loadStoredProjects() {
   let projects = getProjects();
-
+  projects.forEach((proj) => {
+    addProject(proj);
+  });
 }
