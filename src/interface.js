@@ -70,7 +70,7 @@ function menuLoad() {
   menuTasks.id = "menu-tasks";
   h5.id = "projects-title";
   h5.textContent = "Projects";
-  ul.id = "project-list";
+  ul.id = "menu-project-list";
   projectsHeader.id = "projects-header";
   img.src = img0;
   newProjectDiv.id = "new-project";
@@ -111,12 +111,14 @@ function viewLoad() {
 //function too add a project to DOM
 
 export function addProject(project) {
+  
   const li = document.createElement("li");
   const p = document.createElement("p");
   const projectIcon = new Image();
   const editIcon = new Image();
   const deleteIcon = new Image();
-  const ul = document.querySelector("#project-list");
+  const ul = document.querySelector("#menu-project-list");
+
   projectIcon.src = img2;
   projectIcon.classList.add("project-icon");
   editIcon.classList.add("edit-icon");
@@ -211,3 +213,10 @@ function showViewProjects() {
 //function to show the current project thats being clicked on
 
 function showActiveProject(proj) {}
+
+//function to load stored projects into their elements
+
+function loadStoredProjects() {
+  let projects = getProjects();
+
+}
