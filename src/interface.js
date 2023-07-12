@@ -255,3 +255,9 @@ function loadStoredProjects() {
     addProject(proj);
   });
 }
+
+function viewTaskEditor() {
+  const taskEditor = document.createElement("div");
+  const taskName = document.createElement("input");
+  const taskDescription = document.createElement("input");
+}
