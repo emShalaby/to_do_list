@@ -12,6 +12,7 @@ export function pageLoad() {
   mainLoad();
   menuLoad();
   footerLoad();
+
 }
 
 function headerLoad() {
@@ -29,10 +30,8 @@ function headerLoad() {
 
 export function mainLoad() {
   const main = document.createElement("div");
-  // const menu = document.createElement("div");
   const view = document.createElement("div");
-  // const menuProjects = document.createElement("div");
-  // const menuTasks = document.createElement("div");
+
   const viewProjects = document.createElement("div");
   const viewTasks = document.createElement("div");
   const content = document.querySelector("#content");
@@ -57,6 +56,46 @@ function footerLoad() {
   footer.id = "footer";
   content.appendChild(footer);
 }
+
+function menuLoad() {
+  const menu = document.createElement("div");
+  const menuProjects = document.createElement("div");
+  const menuTasks = document.createElement("div");
+  const ul = document.createElement("ul");
+  const projectsHeader = document.createElement("div");
+  const newProjectDiv = document.createElement("div");
+  const h5 = document.createElement("h5");
+  const img = new Image();
+  const main = document.querySelector("#main");
+
+  menu.id = "menu";
+  menuProjects.id = "menu-projects";
+  menuTasks.id = "menu-tasks";
+  h5.id = "projects-title";
+  h5.textContent = "Projects";
+  ul.id = "project-list";
+  projectsHeader.id = "projects-header";
+  img.src = img0;
+  newProjectDiv.id = "new-project";
+
+  menuProjects.appendChild(ul);
+  main.prepend(menu);
+  menu.appendChild(menuProjects);
+  menuProjects.prepend(projectsHeader);
+  projectsHeader.appendChild(h5);
+  projectsHeader.appendChild(newProjectDiv);
+  newProjectDiv.appendChild(img);
+
+  let projects = getProjects();
+  projects.forEach((proj) => addProject(proj));
+
+  newProjectDiv.addEventListener("click", () => {
+    const modal = document.querySelector("#new-project-modal");
+    modal.style.display = "flex";
+  });
+  projectsHeader.addEventListener("click", showViewProjects);
+}
+
 
 export function addProject(project) {
   const li = document.createElement("li");
@@ -154,41 +193,4 @@ function showViewProjects() {
 
 function showActiveProject() {}
 
-function menuLoad() {
-  const menu = document.createElement("div");
-  const menuProjects = document.createElement("div");
-  const menuTasks = document.createElement("div");
-  const ul = document.createElement("ul");
-  const projectsHeader = document.createElement("div");
-  const newProjectDiv = document.createElement("div");
-  const h5 = document.createElement("h5");
-  const img = new Image();
-  const main = document.querySelector("#main");
 
-  menu.id = "menu";
-  menuProjects.id = "menu-projects";
-  menuTasks.id = "menu-tasks";
-  h5.id = "projects-title";
-  h5.textContent = "Projects";
-  ul.id = "project-list";
-  projectsHeader.id = "projects-header";
-  img.src = img0;
-  newProjectDiv.id = "new-project";
-
-  menuProjects.appendChild(ul);
-  main.prepend(menu);
-  menu.appendChild(menuProjects);
-  menuProjects.prepend(projectsHeader);
-  projectsHeader.appendChild(h5);
-  projectsHeader.appendChild(newProjectDiv);
-  newProjectDiv.appendChild(img);
-
-  let projects = getProjects();
-  projects.forEach((proj) => addProject(proj));
-
-  newProjectDiv.addEventListener("click", () => {
-    const modal = document.querySelector("#new-project-modal");
-    modal.style.display = "flex";
-  });
-  projectsHeader.addEventListener("click", showViewProjects);
-}
