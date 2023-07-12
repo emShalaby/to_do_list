@@ -5,6 +5,7 @@ import img3 from "./trash-icon.png";
 import { getProjects } from "./storage";
 import { projectGenerate } from "./project";
 import { storeProjects } from "./storage";
+import { deleteProjects } from "./storage";
 export function pageLoad() {
   headerLoad();
   mainLoad();
@@ -105,4 +106,9 @@ export function addProject(project) {
   li.appendChild(editIcon);
   li.appendChild(deleteIcon);
   ul.appendChild(li);
+
+  deleteIcon.addEventListener("click", () => {
+    deleteProjects(deleteIcon.parentNode.id);
+    deleteIcon.parentNode.remove();
+  });
 }
