@@ -141,7 +141,6 @@ function addProject(project) {
     deleteIcon.parentNode.remove();
   });
 
-
   li.addEventListener("click", () => {
     showActiveProject(li.id);
     activeProjectName = li.id;
@@ -237,11 +236,13 @@ function showActiveProject(projectName) {
   const addTaskIcon = new Image();
   const addNewTask = document.createElement("div");
   const p = document.createElement("p");
+  const tasks = getProjectByName(projectName).tasks;
+  console.log(tasks)
 
   viewHeader.id = "view-header";
   viewMain.id = "view-main";
   h2.textContent = project.name;
-  taskList.id = "#view-task-list";
+  taskList.id = "view-task-list";
   addTaskIcon.id = "add-task-icon";
   addTaskIcon.src = img0;
   p.textContent = "New task";
@@ -251,7 +252,6 @@ function showActiveProject(projectName) {
   view.appendChild(viewMain);
   viewHeader.appendChild(h2);
   viewMain.appendChild(taskList);
-  taskList.appendChild(addNewTask);
   addNewTask.appendChild(addTaskIcon);
   addNewTask.appendChild(p);
 
@@ -260,6 +260,12 @@ function showActiveProject(projectName) {
     viewTaskEditor();
     addNewTask.remove();
   });
+  tasks.forEach((task) => {
+    const taskElem = document.createElement("li");
+    taskElem.textContent = task.title;
+    taskList.appendChild(taskElem);
+  });
+  taskList.appendChild(addNewTask);
 }
 
 //function to load stored projects into their elements
@@ -319,8 +325,14 @@ function viewTaskEditor() {
       );
       storeProjects(project);
       taskEditor.remove();
-      console.log(project);
       showActiveProject(project.name);
+      const task = document.createElement("li");
+      const taskList = document.querySelector("#view-task-list");
+
+      taskList.appendChild(task);
+      task.id = taskName;
+      taskList.textContent = taskName.value;
+      showActiveProject(activeProjectName);
     },
     { once: true }
   );
