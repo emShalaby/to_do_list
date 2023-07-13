@@ -272,6 +272,7 @@ function viewTaskEditor() {
   const addBtn = document.createElement("button");
   const cancel = document.createElement("button");
   const otherProps = document.createElement("div");
+  const controlBtns = document.createElement("div");
 
   taskEditor.id = "task-editor";
   taskName.id = "task-name";
@@ -287,11 +288,15 @@ function viewTaskEditor() {
   addBtn.textContent = "Add";
   cancel.textContent = "Cancel";
   otherProps.id = "task-editor-other";
+  controlBtns.id = "task-editor-control";
 
   taskEditor.appendChild(taskName);
   taskEditor.appendChild(taskDescription);
   taskEditor.appendChild(otherProps);
+  taskEditor.appendChild(controlBtns);
   otherProps.appendChild(dueDate);
   otherProps.appendChild(priority);
+  controlBtns.appendChild(cancel);
+  controlBtns.appendChild(addBtn);
   viewMain.appendChild(taskEditor);
 }

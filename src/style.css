@@ -80,7 +80,9 @@ li{
 input{
     margin-bottom: 2em;
 }
-
+#view{
+    padding: 5em;
+}
 #view-header{
     display: flex;
     justify-content: center;
@@ -97,7 +99,6 @@ input{
 #task-editor{
     display: grid;
     grid-template-rows: auto auto auto auto;
-    grid-template-columns: auto auto;
     padding: 1em;
     gap: .5em;
     border: solid 2px red;
@@ -107,7 +108,6 @@ input{
     padding: 0;
     margin: 0;
     border:none;
-    grid-column: 1/3; 
 }
 
 
@@ -123,4 +123,14 @@ textarea:focus, input:focus{
     display: flex;
     gap: 1em;
     margin: 1em 0;
+    padding-bottom: 1em;
+    border-bottom: solid 2px hotpink;
+}
+#task-editor-control{
+    justify-self: end;
+}
+#task-editor-control>button{
+    width: 5em;
+    height: 1.5em;
+    margin: .5em;
 }
