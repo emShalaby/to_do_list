@@ -10,6 +10,7 @@ import { getProjectByName } from "./storage";
 import { taskGenerate } from "./task.js";
 import { newProjectBtnEvents } from "./events-functions";
 import { menuProjectsHeaderEvents } from "./events-functions";
+import { deleteIconEvents } from "./events-functions";
 let activeProjectName = "";
 export function pageLoad() {
   headerLoad();
@@ -134,10 +135,7 @@ function addProject(project) {
   li.appendChild(deleteIcon);
   ul.appendChild(li);
 
-  deleteIcon.addEventListener("click", () => {
-    deleteProjects(deleteIcon.parentNode.id);
-    deleteIcon.parentNode.remove();
-  });
+  deleteIconEvents();
 
   li.addEventListener("click", () => {
     showActiveProject(li.id);
