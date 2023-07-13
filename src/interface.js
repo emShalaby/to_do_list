@@ -9,6 +9,7 @@ import { deleteProjects } from "./storage";
 import { getProjectByName } from "./storage";
 import { taskGenerate } from "./task.js";
 import { newProjectBtnEvents } from "./events-functions";
+import { menuProjectsHeaderEvents } from "./events-functions";
 let activeProjectName = "";
 export function pageLoad() {
   headerLoad();
@@ -88,7 +89,7 @@ function menuLoad() {
   newProjectDiv.appendChild(img);
 
   newProjectBtnEvents();
-  projectsHeader.addEventListener("click", showViewProjects);
+  menuProjectsHeaderEvents();
 }
 
 //right view area inside main
@@ -180,7 +181,7 @@ function newProjectModal() {
 
 // function to show projects in the view area
 
-function showViewProjects() {
+export function showViewProjects() {
   if (document.querySelector("#view-header"))
     document.querySelector("#view-header").remove();
   if (document.querySelector("#view-main"))
