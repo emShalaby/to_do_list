@@ -8,9 +8,7 @@ import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
 import { getProjectByName } from "./storage";
 import { taskGenerate } from "./task.js";
-import { newProjectBtnEvents } from "./events-functions";
-import { menuProjectsHeaderEvents } from "./events-functions";
-import { deleteIconEvents } from "./events-functions";
+
 let activeProjectName = "";
 export function pageLoad() {
   headerLoad();
@@ -89,8 +87,11 @@ function menuLoad() {
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
 
-  newProjectBtnEvents();
-  menuProjectsHeaderEvents();
+  projectsHeader.addEventListener("click", showViewProjects);
+  newProjectDiv.addEventListener("click", () => {
+    const modal = document.querySelector("#new-project-modal");
+    modal.style.display = "flex";
+  });
 }
 
 //right view area inside main
@@ -135,7 +136,11 @@ function addProject(project) {
   li.appendChild(deleteIcon);
   ul.appendChild(li);
 
-  deleteIconEvents();
+  deleteIcon.addEventListener("click", () => {
+    deleteProjects(deleteIcon.parentNode.id);
+    deleteIcon.parentNode.remove();
+  });
+
 
   li.addEventListener("click", () => {
     showActiveProject(li.id);
