@@ -316,6 +316,9 @@ function viewTaskEditor() {
         taskGenerate(taskName.value, taskDescription.value, "today", "1")
       );
       storeProjects(project);
+      taskEditor.remove();
+      console.log(project);
+      showActiveProject(project.name);
     },
     { once: true }
   );
