@@ -36,6 +36,4 @@ export function getProjectByName(name) {
   return returnProject;
 }
 
-window.getProjectByName = getProjectByName;
 
-window.getProjects = getProjects;

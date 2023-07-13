@@ -7,6 +7,8 @@ import { projectGenerate } from "./project";
 import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
 import { getProjectByName } from "./storage";
+import { taskGenerate } from "./task.js";
+let activeProjectName = "";
 export function pageLoad() {
   headerLoad();
   mainLoad();
@@ -129,6 +131,7 @@ function addProject(project) {
   li.appendChild(projectIcon);
   li.appendChild(p);
   li.appendChild(editIcon);
+
   li.appendChild(deleteIcon);
   ul.appendChild(li);
 
@@ -137,7 +140,10 @@ function addProject(project) {
     deleteIcon.parentNode.remove();
   });
 
-  li.addEventListener("click", () => showActiveProject(li.id));
+  li.addEventListener("click", () => {
+    showActiveProject(li.id);
+    activeProjectName = li.id;
+  });
 }
 
 //modal for adding a new project
@@ -170,6 +176,7 @@ function newProjectModal() {
     addProject(projectGenerate(input.value, []));
     storeProjects(projectGenerate(input.value, []));
     showActiveProject(input.value);
+    activeProjectName = input.value;
   });
 }
 
@@ -299,4 +306,17 @@ function viewTaskEditor() {
   controlBtns.appendChild(cancel);
   controlBtns.appendChild(addBtn);
   viewMain.appendChild(taskEditor);
+
+  addBtn.addEventListener(
+    "click",
+    () => {
+      let project = getProjectByName(activeProjectName);
+      deleteProjects(project);
+      project.addTask(
+        taskGenerate(taskName.value, taskDescription.value, "today", "1")
+      );
+      storeProjects(project);
+    },
+    { once: true }
+  );
 }
