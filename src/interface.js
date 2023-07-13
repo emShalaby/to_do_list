@@ -8,6 +8,7 @@ import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
 import { getProjectByName } from "./storage";
 import { taskGenerate } from "./task.js";
+import { newProjectBtnEvents } from "./events-functions";
 let activeProjectName = "";
 export function pageLoad() {
   headerLoad();
@@ -86,10 +87,7 @@ function menuLoad() {
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
 
-  newProjectDiv.addEventListener("click", () => {
-    const modal = document.querySelector("#new-project-modal");
-    modal.style.display = "flex";
-  });
+  newProjectBtnEvents();
   projectsHeader.addEventListener("click", showViewProjects);
 }
 
