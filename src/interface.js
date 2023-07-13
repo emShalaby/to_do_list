@@ -267,14 +267,31 @@ function viewTaskEditor() {
   const taskName = document.createElement("input");
   const taskDescription = document.createElement("input");
   const viewMain = document.querySelector("#view-main");
+  const dueDate = document.createElement("button");
+  const priority = document.createElement("button");
+  const addBtn = document.createElement("button");
+  const cancel = document.createElement("button");
+  const otherProps = document.createElement("div");
 
   taskEditor.id = "task-editor";
   taskName.id = "task-name";
   taskDescription.id = "task-description";
   taskName.value = "Task name";
   taskDescription.value = "Description";
+  dueDate.id = "due-date";
+  priority.id = "priority";
+  dueDate.textContent = "Due date";
+  priority.textContent = "Priority";
+  addBtn.id = "task-editor-add";
+  cancel.id = "task-editor-cancel";
+  addBtn.textContent = "Add";
+  cancel.textContent = "Cancel";
+  otherProps.id = "task-editor-other";
 
   taskEditor.appendChild(taskName);
   taskEditor.appendChild(taskDescription);
+  taskEditor.appendChild(otherProps);
+  otherProps.appendChild(dueDate);
+  otherProps.appendChild(priority);
   viewMain.appendChild(taskEditor);
 }
