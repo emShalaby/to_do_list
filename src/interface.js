@@ -245,6 +245,12 @@ function showActiveProject(projectName) {
   taskList.appendChild(addNewTask);
   addNewTask.appendChild(addTaskIcon);
   addNewTask.appendChild(p);
+
+  addNewTask.addEventListener("click", () => {});
+  addTaskIcon.addEventListener("click", () => {
+    viewTaskEditor();
+    addNewTask.remove();
+  });
 }
 
 //function to load stored projects into their elements
@@ -260,4 +266,15 @@ function viewTaskEditor() {
   const taskEditor = document.createElement("div");
   const taskName = document.createElement("input");
   const taskDescription = document.createElement("input");
+  const viewMain = document.querySelector("#view-main");
+
+  taskEditor.id = "task-editor";
+  taskName.id = "task-name";
+  taskDescription.id = "task-description";
+  taskName.value = "Task name";
+  taskDescription.value = "Description";
+
+  taskEditor.appendChild(taskName);
+  taskEditor.appendChild(taskDescription);
+  viewMain.appendChild(taskEditor);
 }
