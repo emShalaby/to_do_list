@@ -1,7 +1,7 @@
-import img0 from "./172525_plus_icon.svg";
-import img1 from "./three-dots-punctuation-sign-svgrepo-com.svg";
-import img2 from "./icons8-project-30.png";
-import img3 from "./trash-icon.png";
+import addImg from "./172525_plus_icon.svg";
+import editImg from "./three-dots-punctuation-sign-svgrepo-com.svg";
+import projectImg from "./icons8-project-30.png";
+import deleteImg from "./trash-icon.png";
 import { getProjects } from "./storage";
 import { projectGenerate } from "./project";
 import { storeProjects } from "./storage";
@@ -13,11 +13,12 @@ let activeProjectName = "";
 export function pageLoad() {
   headerLoad();
   mainLoad();
-  newProjectModal();
+  footerLoad();
   menuLoad();
   viewLoad();
-  footerLoad();
-  loadStoredProjects();
+  updatePage();
+  newProjectModal();
+
 }
 
 // website header
@@ -41,6 +42,8 @@ function mainLoad() {
   const main = document.createElement("div");
 
   const content = document.querySelector("#content");
+  const projects = getProjects();
+  projects.forEach((proj) => projectToDOM(proj));
 
   main.id = "main";
 
@@ -56,7 +59,7 @@ function footerLoad() {
   content.appendChild(footer);
 }
 
-//side menu inside main
+// side menu inside main
 
 function menuLoad() {
   const menu = document.createElement("div");
@@ -76,7 +79,7 @@ function menuLoad() {
   h5.textContent = "Projects";
   ul.id = "menu-project-list";
   projectsHeader.id = "projects-header";
-  img.src = img0;
+  img.src = addImg;
   newProjectDiv.id = "new-project";
 
   menuProjects.appendChild(ul);
@@ -87,71 +90,37 @@ function menuLoad() {
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
 
-  projectsHeader.addEventListener("click", showViewProjects);
   newProjectDiv.addEventListener("click", () => {
     const modal = document.querySelector("#new-project-modal");
     modal.style.display = "flex";
   });
 }
 
-//right view area inside main
+// //right view area inside main
 
 function viewLoad() {
   const view = document.createElement("div");
-  const viewProjects = document.createElement("div");
-  const viewTasks = document.createElement("div");
+  const header = document.createElement("div");
   const main = document.querySelector("#main");
+  const menuProjectsHeader = document.querySelector("#projects-header");
+  const h1 = document.createElement("h1");
 
   view.id = "view";
-  viewProjects.id = "view-projects";
-  viewTasks.id = "view-tasks";
+  header.appendChild(h1);
   main.appendChild(view);
-  viewProjects.appendChild(viewTasks);
-}
-
-//function too add a project to DOM
-
-function addProject(project) {
-  const li = document.createElement("li");
-  const p = document.createElement("p");
-  const projectIcon = new Image();
-  const editIcon = new Image();
-  const deleteIcon = new Image();
-  const ul = document.querySelector("#menu-project-list");
-
-  projectIcon.src = img2;
-  projectIcon.classList.add("project-icon");
-  editIcon.classList.add("edit-icon");
-  editIcon.src = img1;
-  deleteIcon.classList.add("delete-icon");
-  deleteIcon.src = img3;
-  li.id = project.name;
-
-  li.classList.add("project");
-  p.textContent = project.name;
-  li.appendChild(projectIcon);
-  li.appendChild(p);
-  li.appendChild(editIcon);
-
-  li.appendChild(deleteIcon);
-  ul.appendChild(li);
-
-  deleteIcon.addEventListener("click", () => {
-    deleteProjects(deleteIcon.parentNode.id);
-    deleteIcon.parentNode.remove();
-  });
-
-  li.addEventListener("click", () => {
-    showActiveProject(li.id);
-    activeProjectName = li.id;
+  menuProjectsHeader.addEventListener("click", () => {
+    view.innerHTML = "";
+    view.append(header);
+    h1.textContent = "Projects";
   });
 }
+
+
 
 //modal for adding a new project
 
 function newProjectModal() {
   const modal = document.createElement("div");
-  const content = document.querySelector("#content");
   const input = document.createElement("input");
   const submitBtn = document.createElement("button");
   const label = document.createElement("label");
@@ -173,167 +142,118 @@ function newProjectModal() {
   modal.style.display = "none";
 
   submitBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    addProject(projectGenerate(input.value, []));
     storeProjects(projectGenerate(input.value, []));
-    showActiveProject(input.value);
-    activeProjectName = input.value;
+    modal.style.display = "none";
+    updatePage();
   });
 }
 
-// function to show projects in the view area
 
-export function showViewProjects() {
-  if (document.querySelector("#view-header"))
-    document.querySelector("#view-header").remove();
-  if (document.querySelector("#view-main"))
-    document.querySelector("#view-main").remove();
-  const projects = getProjects();
 
-  const viewHeader = document.createElement("div");
-  const h2 = document.createElement("h2");
-  const view = document.querySelector("#view");
-  const projectList = document.createElement("ul");
-  const main = document.createElement("div");
+// function viewTaskEditor() {
+//   const taskEditor = document.createElement("div");
+//   const taskName = document.createElement("input");
+//   const taskDescription = document.createElement("input");
+//   const viewMain = document.querySelector("#view-main");
+//   const dueDate = document.createElement("button");
+//   const priority = document.createElement("button");
+//   const addBtn = document.createElement("button");
+//   const cancel = document.createElement("button");
+//   const otherProps = document.createElement("div");
+//   const controlBtns = document.createElement("div");
 
-  viewHeader.id = "view-header";
-  h2.textContent = "Projects";
-  projectList.id = "view-project-list";
-  main.id = "view-main";
+//   taskEditor.id = "task-editor";
+//   taskName.id = "task-name";
+//   taskDescription.id = "task-description";
+//   taskName.value = "Task name";
+//   taskDescription.value = "Description";
+//   dueDate.id = "due-date";
+//   priority.id = "priority";
+//   dueDate.textContent = "Due date";
+//   priority.textContent = "Priority";
+//   addBtn.id = "task-editor-add";
+//   cancel.id = "task-editor-cancel";
+//   addBtn.textContent = "Add";
+//   cancel.textContent = "Cancel";
+//   otherProps.id = "task-editor-other";
+//   controlBtns.id = "task-editor-control";
 
-  view.appendChild(viewHeader);
-  viewHeader.appendChild(h2);
-  main.appendChild(projectList);
-  view.appendChild(main);
+//   taskEditor.appendChild(taskName);
+//   taskEditor.appendChild(taskDescription);
+//   taskEditor.appendChild(otherProps);
+//   taskEditor.appendChild(controlBtns);
+//   otherProps.appendChild(dueDate);
+//   otherProps.appendChild(priority);
+//   controlBtns.appendChild(cancel);
+//   controlBtns.appendChild(addBtn);
+//   viewMain.appendChild(taskEditor);
+// }
 
-  if (projects.length == 0) return;
-  projects.forEach((proj) => {
-    const li = document.createElement("li");
-    const p = document.createElement("p");
-
-    p.textContent = proj.name;
-
-    projectList.appendChild(li);
-    li.appendChild(p);
-  });
-}
-
-//function to show the current project thats being clicked on
-
-function showActiveProject(projectName) {
-  if (document.querySelector("#view-header"))
-    document.querySelector("#view-header").remove();
-  if (document.querySelector("#view-main"))
-    document.querySelector("#view-main").remove();
-
-  let project = getProjectByName(projectName);
-
-  const h2 = document.createElement("h2");
-  const viewHeader = document.createElement("div");
-  const viewMain = document.createElement("div");
-  const view = document.querySelector("#view");
-  const taskList = document.createElement("ul");
-  const addTaskIcon = new Image();
-  const addNewTask = document.createElement("div");
+function projectToDOM(project) {
+  const menuLi = document.createElement("li");
   const p = document.createElement("p");
-  const tasks = getProjectByName(projectName).tasks;
-  console.log(tasks)
+  const projectIcon = new Image();
+  const editIcon = new Image();
+  const deleteIcon = new Image();
+  const projectView = document.createElement("div");
+  const projectHeader = document.createElement("div");
+  const projectMain = document.createElement("div");
+  const h1 = document.createElement("h1");
+  const taskList = document.createElement("ul");
 
-  viewHeader.id = "view-header";
-  viewMain.id = "view-main";
-  h2.textContent = project.name;
-  taskList.id = "view-task-list";
-  addTaskIcon.id = "add-task-icon";
-  addTaskIcon.src = img0;
-  p.textContent = "New task";
-  addNewTask.id = "view-add-task";
+  p.textContent = project.name;
+  editIcon.src = editImg;
+  deleteIcon.src = deleteImg;
+  projectIcon.src = projectImg;
+  menuLi.id = "menu-" + project.name;
+  projectIcon.classList.add("project-icon");
+  editIcon.classList.add("edit-icon");
+  deleteIcon.classList.add("delete-icon");
+  projectView.classList.add("project-view");
+  projectHeader.classList.add("project-header");
+  projectMain.classList.add("project-main");
 
-  view.appendChild(viewHeader);
-  view.appendChild(viewMain);
-  viewHeader.appendChild(h2);
-  viewMain.appendChild(taskList);
-  addNewTask.appendChild(addTaskIcon);
-  addNewTask.appendChild(p);
+  menuLi.append(projectIcon, p, editIcon, deleteIcon);
 
-  addNewTask.addEventListener("click", () => {});
-  addTaskIcon.addEventListener("click", () => {
-    viewTaskEditor();
-    addNewTask.remove();
+  // view part
+  h1.textContent = project.name;
+  projectView.append(projectHeader, projectMain);
+  project.tasks.forEach((task) => {
+    const taskName = document.createElement("li");
+    taskName.textContent = task.title;
+    viewProjects.appendChild(viewTasks);
+
+    taskList.appendChild(taskName);
   });
-  tasks.forEach((task) => {
-    const taskElem = document.createElement("li");
-    taskElem.textContent = task.title;
-    taskList.appendChild(taskElem);
-  });
-  taskList.appendChild(addNewTask);
+  projectMain.appendChild(taskList);
+  projectHeader.appendChild(h1);
+
+  return { menuLi, projectView, deleteIcon };
 }
 
-//function to load stored projects into their elements
-
-function loadStoredProjects() {
+function updatePage() {
+  let projectElements = [];
   let projects = getProjects();
+  const menuProjectList = document.querySelector("#menu-project-list");
+  const view = document.querySelector("#view");
+  menuProjectList.innerHTML = "";
   projects.forEach((proj) => {
-    addProject(proj);
+    projectElements.push(projectToDOM(proj));
   });
-}
 
-function viewTaskEditor() {
-  const taskEditor = document.createElement("div");
-  const taskName = document.createElement("input");
-  const taskDescription = document.createElement("input");
-  const viewMain = document.querySelector("#view-main");
-  const dueDate = document.createElement("button");
-  const priority = document.createElement("button");
-  const addBtn = document.createElement("button");
-  const cancel = document.createElement("button");
-  const otherProps = document.createElement("div");
-  const controlBtns = document.createElement("div");
+  projectElements.forEach((projObj) => {
+    menuProjectList.appendChild(projObj.menuLi);
 
-  taskEditor.id = "task-editor";
-  taskName.id = "task-name";
-  taskDescription.id = "task-description";
-  taskName.value = "Task name";
-  taskDescription.value = "Description";
-  dueDate.id = "due-date";
-  priority.id = "priority";
-  dueDate.textContent = "Due date";
-  priority.textContent = "Priority";
-  addBtn.id = "task-editor-add";
-  cancel.id = "task-editor-cancel";
-  addBtn.textContent = "Add";
-  cancel.textContent = "Cancel";
-  otherProps.id = "task-editor-other";
-  controlBtns.id = "task-editor-control";
-
-  taskEditor.appendChild(taskName);
-  taskEditor.appendChild(taskDescription);
-  taskEditor.appendChild(otherProps);
-  taskEditor.appendChild(controlBtns);
-  otherProps.appendChild(dueDate);
-  otherProps.appendChild(priority);
-  controlBtns.appendChild(cancel);
-  controlBtns.appendChild(addBtn);
-  viewMain.appendChild(taskEditor);
-
-  addBtn.addEventListener(
-    "click",
-    () => {
-      let project = getProjectByName(activeProjectName);
-      deleteProjects(project);
-      project.addTask(
-        taskGenerate(taskName.value, taskDescription.value, "today", "1")
-      );
-      storeProjects(project);
-      taskEditor.remove();
-      showActiveProject(project.name);
-      const task = document.createElement("li");
-      const taskList = document.querySelector("#view-task-list");
-
-      taskList.appendChild(task);
-      task.id = taskName;
-      taskList.textContent = taskName.value;
-      showActiveProject(activeProjectName);
-    },
-    { once: true }
-  );
+    projObj.menuLi.addEventListener("click", (event) => {
+      event.stopPropagation();
+      view.innerHTML = "";
+      view.appendChild(projObj.projectView);
+    });
+    projObj.deleteIcon.addEventListener("click", (event) => {
+      event.stopPropagation();
+      deleteProjects(projects[projectElements.indexOf(projObj)]);
+      projObj.menuLi.remove();
+      projObj.projectView.remove();
+    });
+  });
 }
