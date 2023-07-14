@@ -18,7 +18,6 @@ export function pageLoad() {
   viewLoad();
   updatePage();
   newProjectModal();
-
 }
 
 // website header
@@ -112,10 +111,9 @@ function viewLoad() {
     view.innerHTML = "";
     view.append(header);
     h1.textContent = "Projects";
+    header.classList.add("view-project-header");
   });
 }
-
-
 
 //modal for adding a new project
 
@@ -147,8 +145,6 @@ function newProjectModal() {
     updatePage();
   });
 }
-
-
 
 // function viewTaskEditor() {
 //   const taskEditor = document.createElement("div");
@@ -210,7 +206,7 @@ function projectToDOM(project) {
   editIcon.classList.add("edit-icon");
   deleteIcon.classList.add("delete-icon");
   projectView.classList.add("project-view");
-  projectHeader.classList.add("project-header");
+  projectHeader.classList.add("view-project-header");
   projectMain.classList.add("project-main");
 
   menuLi.append(projectIcon, p, editIcon, deleteIcon);

@@ -134,3 +134,9 @@ textarea:focus, input:focus{
     height: 1.5em;
     margin: .5em;
 }
+
+.view-project-header{
+    display:flex;
+    justify-content: center;
+  
+}
