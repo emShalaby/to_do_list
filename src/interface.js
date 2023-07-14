@@ -147,44 +147,43 @@ function newProjectModal() {
   });
 }
 
-// function viewTaskEditor() {
-//   const taskEditor = document.createElement("div");
-//   const taskName = document.createElement("input");
-//   const taskDescription = document.createElement("input");
-//   const viewMain = document.querySelector("#view-main");
-//   const dueDate = document.createElement("button");
-//   const priority = document.createElement("button");
-//   const addBtn = document.createElement("button");
-//   const cancel = document.createElement("button");
-//   const otherProps = document.createElement("div");
-//   const controlBtns = document.createElement("div");
+function viewTaskEditor() {
+  const taskEditor = document.createElement("div");
+  const taskName = document.createElement("input");
+  const taskDescription = document.createElement("input");
+  const dueDate = document.createElement("button");
+  const priority = document.createElement("button");
+  const addBtn = document.createElement("button");
+  const cancel = document.createElement("button");
+  const otherProps = document.createElement("div");
+  const controlBtns = document.createElement("div");
 
-//   taskEditor.id = "task-editor";
-//   taskName.id = "task-name";
-//   taskDescription.id = "task-description";
-//   taskName.value = "Task name";
-//   taskDescription.value = "Description";
-//   dueDate.id = "due-date";
-//   priority.id = "priority";
-//   dueDate.textContent = "Due date";
-//   priority.textContent = "Priority";
-//   addBtn.id = "task-editor-add";
-//   cancel.id = "task-editor-cancel";
-//   addBtn.textContent = "Add";
-//   cancel.textContent = "Cancel";
-//   otherProps.id = "task-editor-other";
-//   controlBtns.id = "task-editor-control";
+  taskEditor.id = "task-editor";
+  taskName.id = "task-name";
+  taskDescription.id = "task-description";
+  taskName.value = "Task name";
+  taskDescription.value = "Description";
+  dueDate.id = "due-date";
+  priority.id = "priority";
+  dueDate.textContent = "Due date";
+  priority.textContent = "Priority";
+  addBtn.id = "task-editor-add";
+  cancel.id = "task-editor-cancel";
+  addBtn.textContent = "Add";
+  cancel.textContent = "Cancel";
+  otherProps.id = "task-editor-other";
+  controlBtns.id = "task-editor-control";
 
-//   taskEditor.appendChild(taskName);
-//   taskEditor.appendChild(taskDescription);
-//   taskEditor.appendChild(otherProps);
-//   taskEditor.appendChild(controlBtns);
-//   otherProps.appendChild(dueDate);
-//   otherProps.appendChild(priority);
-//   controlBtns.appendChild(cancel);
-//   controlBtns.appendChild(addBtn);
-//   viewMain.appendChild(taskEditor);
-// }
+  taskEditor.appendChild(taskName);
+  taskEditor.appendChild(taskDescription);
+  taskEditor.appendChild(otherProps);
+  taskEditor.appendChild(controlBtns);
+  otherProps.appendChild(dueDate);
+  otherProps.appendChild(priority);
+  controlBtns.appendChild(cancel);
+  controlBtns.appendChild(addBtn);
+  return { taskEditor, addBtn, taskName };
+}
 
 function projectToDOM(project) {
   const menuLi = document.createElement("li");
@@ -209,7 +208,7 @@ function projectToDOM(project) {
   projectView.classList.add("project-view");
   projectHeader.classList.add("view-project-header");
   projectMain.classList.add("project-main");
-
+  taskList.id = "view-task-list";
   menuLi.append(projectIcon, p, editIcon, deleteIcon);
 
   h1.textContent = project.name;
@@ -224,7 +223,7 @@ function projectToDOM(project) {
   projectMain.appendChild(taskList);
   projectHeader.appendChild(h1);
 
-  return { menuLi, projectView, deleteIcon };
+  return { menuLi, projectView, deleteIcon, projectMain };
 }
 
 function updatePage() {
@@ -232,11 +231,32 @@ function updatePage() {
   let projects = getProjects();
   const menuProjectList = document.querySelector("#menu-project-list");
   const view = document.querySelector("#view");
+  const newTaskBtn = document.createElement("div");
+  const p = document.createElement("p");
+  p.textContent = "New task";
+
+  newTaskBtn.append(p);
+
   menuProjectList.innerHTML = "";
   projects.forEach((proj) => {
     projectElements.push(projectToDOM(proj));
   });
 
+  newTaskBtn.addEventListener("click", () => {
+    newTaskBtn.remove();
+    let taskEditorElements = viewTaskEditor();
+    view.append(taskEditorElements.taskEditor);
+
+    taskEditorElements.addBtn.addEventListener("click", () => {
+      taskEditorElements.taskEditor.remove();
+      const newTask = taskToDOM(
+        taskGenerate(taskEditorElements.taskName.value, "xd", "xd")
+      );
+      const taskList = document.querySelector("#view-task-list");
+      taskList.append(newTask);
+      view.append(newTaskBtn);
+    });
+  });
   projectElements.forEach((projObj) => {
     menuProjectList.appendChild(projObj.menuLi);
 
@@ -244,6 +264,7 @@ function updatePage() {
       event.stopPropagation();
       view.innerHTML = "";
       view.appendChild(projObj.projectView);
+      projObj.projectMain.appendChild(newTaskBtn);
     });
     projObj.deleteIcon.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -252,4 +273,14 @@ function updatePage() {
       projObj.projectView.remove();
     });
   });
+}
+
+function taskToDOM(task) {
+  const taskLi = document.createElement("li");
+  const taskName = document.createElement("h4");
+
+  taskName.textContent = task.title;
+  taskLi.append(taskName);
+
+  return taskLi;
 }

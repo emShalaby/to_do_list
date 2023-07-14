@@ -1,3 +1,3 @@
-export  function taskGenerate(title, description, duedate, priority) {
-  return { title, description, duedate, priority };
+export function taskGenerate(title, description, duedate) {
+  return { title, description, duedate };
 }
