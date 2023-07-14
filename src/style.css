@@ -63,8 +63,8 @@ li{
     margin-right: .5em;
     margin-bottom: .5em;
     margin-top: .5em;
+    padding: 1em;
     gap: .5em;
-    border: solid hotpink 2px;
 }
 
 #new-project-modal{
@@ -139,4 +139,16 @@ textarea:focus, input:focus{
     display:flex;
     justify-content: center;
   
+}
+#view-task-list>li{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5em;
+    margin-bottom: 1em;
+    border-bottom: 2px solid hotpink;
+
+}
+#view-task-list{
+    margin-top: 2em;
 }

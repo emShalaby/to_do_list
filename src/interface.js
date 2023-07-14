@@ -191,7 +191,7 @@ function viewTaskEditor() {
   otherProps.appendChild(priority);
   controlBtns.appendChild(cancel);
   controlBtns.appendChild(addBtn);
-  return { taskEditor, addBtn, taskName };
+  return { taskEditor, addBtn, taskName, taskDescription };
 }
 
 function projectToDOM(project) {
@@ -296,11 +296,13 @@ function taskToDOM(task) {
   const taskLi = document.createElement("li");
   const taskName = document.createElement("h4");
   const taskDescription = document.createElement("h5");
+  const dueDate=document.createElement("h5")
 
   taskName.textContent = task.title;
   taskLi.append(taskName);
-  taskDescription.textContent = task.desription;
+  taskDescription.textContent = task.description;
   taskLi.append(taskDescription);
-
+  dueDate.textContent=task.duedate
+  taskLi.append(dueDate);
   return taskLi;
 }
