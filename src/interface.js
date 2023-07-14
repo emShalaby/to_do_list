@@ -10,9 +10,7 @@ import { taskGenerate } from "./task.js";
 import { storeTaskIntoProject } from "./storage";
 import { deleteStoredtask } from "./storage";
 
-let activeProjectName = "";
 export function pageLoad() {
-  console.log(getProjects());
   headerLoad();
   mainLoad();
   footerLoad();
@@ -72,6 +70,9 @@ function menuLoad() {
   const h5 = document.createElement("h5");
   const img = new Image();
   const main = document.querySelector("#main");
+  const inbox = document.createElement("div");
+  const today = document.createElement("div");
+  const thisWeek = document.createElement("div");
 
   menu.id = "menu";
   menuProjects.id = "menu-projects";
@@ -82,10 +83,17 @@ function menuLoad() {
   projectsHeader.id = "menu-projects-header";
   img.src = addImg;
   newProjectDiv.id = "new-project";
+  inbox.id = "inbox";
+  today.id = "today";
+  thisWeek.id = "this-week";
+  inbox.textContent = "Inbox";
+  today.textContent = "Today";
+  thisWeek.textContent = "This week";
+
+  main.append(menu);
 
   menuProjects.appendChild(ul);
-  main.prepend(menu);
-  menu.appendChild(menuProjects);
+  menu.append(inbox, today, thisWeek, menuProjects);
   menuProjects.prepend(projectsHeader);
   projectsHeader.appendChild(h5);
   projectsHeader.appendChild(newProjectDiv);
