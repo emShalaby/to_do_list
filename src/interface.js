@@ -78,7 +78,7 @@ function menuLoad() {
   h5.id = "projects-title";
   h5.textContent = "Projects";
   ul.id = "menu-project-list";
-  projectsHeader.id = "projects-header";
+  projectsHeader.id = "menu-projects-header";
   img.src = addImg;
   newProjectDiv.id = "new-project";
 
@@ -102,7 +102,7 @@ function viewLoad() {
   const view = document.createElement("div");
   const header = document.createElement("div");
   const main = document.querySelector("#main");
-  const menuProjectsHeader = document.querySelector("#projects-header");
+  const menuProjectsHeader = document.querySelector("#menu-projects-header");
   const h1 = document.createElement("h1");
 
   view.id = "view";
@@ -215,7 +215,6 @@ function projectToDOM(project) {
 
   menuLi.append(projectIcon, p, editIcon, deleteIcon);
 
-  // view part
   h1.textContent = project.name;
   projectView.append(projectHeader, projectMain);
   project.tasks.forEach((task) => {
