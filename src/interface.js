@@ -6,9 +6,9 @@ import { getProjects } from "./storage";
 import { projectGenerate } from "./project";
 import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
-import { getProjectByName } from "./storage";
 import { taskGenerate } from "./task.js";
 import { storeTaskIntoProject } from "./storage";
+import { deleteStoredtask } from "./storage";
 
 let activeProjectName = "";
 export function pageLoad() {
@@ -224,8 +224,15 @@ function projectToDOM(project) {
   projectView.append(projectHeader, projectMain);
 
   project.tasks.forEach((task) => {
-    const taskLi = taskToDOM(task);
-    taskList.append(taskLi);
+    const taskElems = taskToDOM(task);
+    const taskElement = taskElems.taskLi;
+    taskList.append(taskElement);
+    const taskDeleteIcon = taskElems.deleteIcon;
+    taskDeleteIcon.addEventListener("click", () => {
+      taskElement.remove();
+      project.deleteTask(task);
+      deleteStoredtask(project, task);
+    });
   });
   projectMain.appendChild(taskList);
   projectHeader.appendChild(h1);
@@ -261,15 +268,21 @@ function updatePage() {
           "xd",
           "xd"
         );
-        const newTaskElem = taskToDOM(newTask);
+        const newTaskElems = taskToDOM(newTask);
         const taskList = document.querySelector("#view-task-list");
-        taskList.append(newTaskElem);
+        const taskDeleteIcon = newTaskElems.deleteIcon;
+        taskList.append(newTaskElems.taskLi);
         view.append(newTaskBtn);
         console.log(projects[projectElements.indexOf(projObj)]);
         storeTaskIntoProject(
           projects[projectElements.indexOf(projObj)],
           newTask
         );
+        taskDeleteIcon.addEventListener("click", () => {
+          newTaskElems.taskLi.remove();
+          projects[projectElements.indexOf(projObj)].deleteTask(newTask);
+          deleteStoredtask(projects[projectElements.indexOf(projObj)], newTask);
+        });
       });
       view.append(taskEditorElements.taskEditor);
     });
@@ -296,13 +309,17 @@ function taskToDOM(task) {
   const taskLi = document.createElement("li");
   const taskName = document.createElement("h4");
   const taskDescription = document.createElement("h5");
-  const dueDate=document.createElement("h5")
+  const dueDate = document.createElement("h5");
+  const deleteIcon = new Image();
 
+  deleteIcon.src = deleteImg;
+  deleteIcon.classList.add("delete-icon");
   taskName.textContent = task.title;
   taskLi.append(taskName);
   taskDescription.textContent = task.description;
   taskLi.append(taskDescription);
-  dueDate.textContent=task.duedate
+  dueDate.textContent = task.duedate;
   taskLi.append(dueDate);
-  return taskLi;
+  taskLi.append(deleteIcon);
+  return { taskLi, deleteIcon };
 }

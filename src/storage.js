@@ -42,7 +42,6 @@ export function storeTaskIntoProject(project, task) {
   let projects = getProjects();
   projects.forEach((proj) => deleteProjects(proj));
   project.addTask(task);
-  console.log(project);
   projects.forEach((proj) => {
     if (proj.name == project.name) proj.tasks = project.tasks;
   });
@@ -50,3 +49,13 @@ export function storeTaskIntoProject(project, task) {
 }
 
 window.getProjects = getProjects;
+
+export function deleteStoredtask(project, task) {
+  let projects = getProjects();
+  projects.forEach((proj) => deleteProjects(proj));
+  project.deleteTask(task);
+  projects.forEach((proj) => {
+    if (proj.name == project.name) proj.tasks = project.tasks;
+  });
+  localStorage.setItem("projects", JSON.stringify(projects));
+}
