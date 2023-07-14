@@ -8,9 +8,11 @@ import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
 import { getProjectByName } from "./storage";
 import { taskGenerate } from "./task.js";
+import { storeTaskIntoProject } from "./storage";
 
 let activeProjectName = "";
 export function pageLoad() {
+  console.log(getProjects());
   headerLoad();
   mainLoad();
   footerLoad();
@@ -99,6 +101,7 @@ function menuLoad() {
 // //right view area inside main
 
 function viewLoad() {
+  if (document.querySelector("#view")) document.querySelector("#view").remove();
   const view = document.createElement("div");
   const header = document.createElement("div");
   const main = document.querySelector("#main");
@@ -141,6 +144,12 @@ function newProjectModal() {
   modal.style.display = "none";
 
   submitBtn.addEventListener("click", () => {
+    let projects = getProjects();
+    let projectNames = [];
+    projects.forEach((project) => {
+      projectNames.push(project.name);
+    });
+    if (projectNames.includes(input.value)) return;
     storeProjects(projectGenerate(input.value, []));
     modal.style.display = "none";
     updatePage();
@@ -213,12 +222,10 @@ function projectToDOM(project) {
 
   h1.textContent = project.name;
   projectView.append(projectHeader, projectMain);
-  project.tasks.forEach((task) => {
-    const taskName = document.createElement("li");
-    taskName.textContent = task.title;
-    viewProjects.appendChild(viewTasks);
 
-    taskList.appendChild(taskName);
+  project.tasks.forEach((task) => {
+    const taskLi = taskToDOM(task);
+    taskList.append(taskLi);
   });
   projectMain.appendChild(taskList);
   projectHeader.appendChild(h1);
@@ -231,33 +238,42 @@ function updatePage() {
   let projects = getProjects();
   const menuProjectList = document.querySelector("#menu-project-list");
   const view = document.querySelector("#view");
-  const newTaskBtn = document.createElement("div");
-  const p = document.createElement("p");
-  p.textContent = "New task";
-
-  newTaskBtn.append(p);
 
   menuProjectList.innerHTML = "";
   projects.forEach((proj) => {
     projectElements.push(projectToDOM(proj));
   });
 
-  newTaskBtn.addEventListener("click", () => {
-    newTaskBtn.remove();
-    let taskEditorElements = viewTaskEditor();
-    view.append(taskEditorElements.taskEditor);
-
-    taskEditorElements.addBtn.addEventListener("click", () => {
-      taskEditorElements.taskEditor.remove();
-      const newTask = taskToDOM(
-        taskGenerate(taskEditorElements.taskName.value, "xd", "xd")
-      );
-      const taskList = document.querySelector("#view-task-list");
-      taskList.append(newTask);
-      view.append(newTaskBtn);
-    });
-  });
   projectElements.forEach((projObj) => {
+    const newTaskBtn = document.createElement("div");
+    const p = document.createElement("p");
+    p.textContent = "New task";
+    newTaskBtn.append(p);
+
+    newTaskBtn.addEventListener("click", () => {
+      newTaskBtn.remove();
+      let taskEditorElements = viewTaskEditor();
+
+      taskEditorElements.addBtn.addEventListener("click", () => {
+        taskEditorElements.taskEditor.remove();
+        const newTask = taskGenerate(
+          taskEditorElements.taskName.value,
+          "xd",
+          "xd"
+        );
+        const newTaskElem = taskToDOM(newTask);
+        const taskList = document.querySelector("#view-task-list");
+        taskList.append(newTaskElem);
+        view.append(newTaskBtn);
+        console.log(projects[projectElements.indexOf(projObj)]);
+        storeTaskIntoProject(
+          projects[projectElements.indexOf(projObj)],
+          newTask
+        );
+      });
+      view.append(taskEditorElements.taskEditor);
+    });
+
     menuProjectList.appendChild(projObj.menuLi);
 
     projObj.menuLi.addEventListener("click", (event) => {
@@ -271,6 +287,7 @@ function updatePage() {
       deleteProjects(projects[projectElements.indexOf(projObj)]);
       projObj.menuLi.remove();
       projObj.projectView.remove();
+      viewLoad();
     });
   });
 }
@@ -278,9 +295,12 @@ function updatePage() {
 function taskToDOM(task) {
   const taskLi = document.createElement("li");
   const taskName = document.createElement("h4");
+  const taskDescription = document.createElement("h5");
 
   taskName.textContent = task.title;
   taskLi.append(taskName);
+  taskDescription.textContent = task.desription;
+  taskLi.append(taskDescription);
 
   return taskLi;
 }
