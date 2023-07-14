@@ -89,7 +89,8 @@ function menuLoad() {
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
 
-  newProjectDiv.addEventListener("click", () => {
+  newProjectDiv.addEventListener("click", (event) => {
+    event.stopPropagation();
     const modal = document.querySelector("#new-project-modal");
     modal.style.display = "flex";
   });
