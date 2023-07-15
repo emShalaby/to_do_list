@@ -1,4 +1,5 @@
 import { projectGenerate } from "./project";
+import { format } from "date-fns";
 
 export function storeProjects(project) {
   let projects = getProjects();
@@ -60,4 +61,15 @@ export function deleteStoredtask(project, task) {
   localStorage.setItem("projects", JSON.stringify(projects));
 }
 
-
+export function getTodayTasks() {
+  let projects = getProjects();
+  let todayTasks = [];
+  projects.forEach((project) => {
+    project.tasks.forEach((task) => {
+      if (task.duedate == format(new Date(), "yyyy-MM-dd"))
+        todayTasks.push(task);
+    });
+  });
+  return todayTasks;
+}
+window.getTodayTasks = getTodayTasks;
