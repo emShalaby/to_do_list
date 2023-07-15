@@ -215,7 +215,6 @@ function projectToDOM(project) {
   const menuLi = document.createElement("li");
   const p = document.createElement("p");
   const projectIcon = new Image();
-  const editIcon = new Image();
   const deleteIcon = new Image();
   const projectView = document.createElement("div");
   const projectHeader = document.createElement("div");
@@ -224,18 +223,16 @@ function projectToDOM(project) {
   const taskList = document.createElement("ul");
 
   p.textContent = project.name;
-  editIcon.src = editImg;
   deleteIcon.src = deleteImg;
   projectIcon.src = projectImg;
   menuLi.id = "menu-" + project.name;
   projectIcon.classList.add("project-icon");
-  editIcon.classList.add("edit-icon");
   deleteIcon.classList.add("delete-icon");
   projectView.classList.add("project-view");
   projectHeader.classList.add("view-project-header");
   projectMain.classList.add("project-main");
   taskList.id = "view-task-list";
-  menuLi.append(projectIcon, p, editIcon, deleteIcon);
+  menuLi.append(projectIcon, p,  deleteIcon);
 
   h1.textContent = project.name;
   projectView.append(projectHeader, projectMain);
