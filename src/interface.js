@@ -16,7 +16,7 @@ export function pageLoad() {
   footerLoad();
   menuLoad();
   viewLoad();
-  updatePage();
+  updatePage(false);
   newProjectModal();
 }
 
@@ -143,6 +143,7 @@ function newProjectModal() {
   const input = document.createElement("input");
   const submitBtn = document.createElement("button");
   const label = document.createElement("label");
+  const view = document.querySelector("#view");
 
   modal.id = "new-project-modal";
   input.id = "new-project-name";
@@ -169,7 +170,7 @@ function newProjectModal() {
     if (projectNames.includes(input.value)) return;
     storeProjects(projectGenerate(input.value, []));
     modal.style.display = "none";
-    updatePage();
+    updatePage(true);
   });
 }
 
@@ -232,7 +233,7 @@ function projectToDOM(project) {
   projectHeader.classList.add("view-project-header");
   projectMain.classList.add("project-main");
   taskList.id = "view-task-list";
-  menuLi.append(projectIcon, p,  deleteIcon);
+  menuLi.append(projectIcon, p, deleteIcon);
 
   h1.textContent = project.name;
   projectView.append(projectHeader, projectMain);
@@ -288,7 +289,7 @@ function createNewTaskBtn() {
   return newTaskBtn;
 }
 
-function updatePage() {
+function updatePage(isNewProjectCreated) {
   let projectElements = [];
 
   let projects = getProjects();
@@ -304,8 +305,16 @@ function updatePage() {
   });
 
   projectElements.forEach((projObj) => {
+    //this part makes it so when you add a new project , it shows the project details(.projectView) on the right side
+    //isNewProjectCreated is true when a new project is created
     const newTaskBtn = createNewTaskBtn();
-
+    if (isNewProjectCreated) {
+      view.innerHTML = "";
+      view.append(
+        projectToDOM(getProjects().slice(-1)[0]).projectView,
+        newTaskBtn
+      );
+    }
     newTaskBtn.addEventListener("click", () => {
       newTaskBtn.remove();
 
