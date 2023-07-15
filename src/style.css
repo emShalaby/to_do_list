@@ -110,7 +110,7 @@ textarea:focus, input:focus{
 }
 
 #priority,#due-date{
-    width: 5em;
+    width: 12em;
     height: 2em;
 }
 #task-editor-other{

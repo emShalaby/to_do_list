@@ -178,7 +178,7 @@ function createTaskEditor() {
   const taskEditor = document.createElement("div");
   const taskName = document.createElement("input");
   const taskDescription = document.createElement("input");
-  const dueDate = document.createElement("button");
+  const dueDate = document.createElement("input");
   const priority = document.createElement("button");
   const addBtn = document.createElement("button");
   const cancel = document.createElement("button");
@@ -193,6 +193,7 @@ function createTaskEditor() {
   dueDate.id = "due-date";
   priority.id = "priority";
   dueDate.textContent = "Due date";
+  dueDate.type = "date";
   priority.textContent = "Priority";
   addBtn.id = "task-editor-add";
   cancel.id = "task-editor-cancel";
@@ -209,7 +210,7 @@ function createTaskEditor() {
   otherProps.appendChild(priority);
   controlBtns.appendChild(cancel);
   controlBtns.appendChild(addBtn);
-  return { taskEditor, addBtn, taskName, taskDescription };
+  return { taskEditor, addBtn, taskName, taskDescription, dueDate };
 }
 
 function projectToDOM(project) {
@@ -325,7 +326,7 @@ function updatePage(isNewProjectCreated) {
         const newTask = taskGenerate(
           taskEditorElements.taskName.value,
           taskEditorElements.taskDescription.value,
-          "xd"
+          taskEditorElements.dueDate.value
         );
 
         const newTaskElems = taskToDOM(newTask);

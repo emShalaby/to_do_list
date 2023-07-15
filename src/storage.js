@@ -59,3 +59,5 @@ export function deleteStoredtask(project, task) {
   });
   localStorage.setItem("projects", JSON.stringify(projects));
 }
+
+
