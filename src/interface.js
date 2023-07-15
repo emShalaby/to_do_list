@@ -119,11 +119,20 @@ function viewLoad() {
   view.id = "view";
   header.appendChild(h1);
   main.appendChild(view);
+
   menuProjectsHeader.addEventListener("click", () => {
+    const projects = getProjects();
+    const projectList = document.createElement("ul");
     view.innerHTML = "";
-    view.append(header);
+    view.append(header, projectList);
     h1.textContent = "Projects";
     header.classList.add("view-project-header");
+    projects.forEach((proj) => {
+      const projectElems = projectToDOM(proj);
+      const li = document.createElement("li");
+      li.textContent = proj.name;
+      projectList.append(li);
+    });
   });
 }
 
@@ -164,7 +173,7 @@ function newProjectModal() {
   });
 }
 
-function viewTaskEditor() {
+function createTaskEditor() {
   const taskEditor = document.createElement("div");
   const taskName = document.createElement("input");
   const taskDescription = document.createElement("input");
@@ -248,50 +257,93 @@ function projectToDOM(project) {
   return { menuLi, projectView, deleteIcon, projectMain };
 }
 
+function taskToDOM(task) {
+  const taskLi = document.createElement("li");
+  const taskName = document.createElement("h4");
+  const taskDescription = document.createElement("h5");
+  const dueDate = document.createElement("h5");
+  const deleteIcon = new Image();
+  const checkIcon = document.createElement("div");
+
+  checkIcon.classList.add("check-icon");
+  deleteIcon.src = deleteImg;
+  deleteIcon.classList.add("delete-icon");
+  taskName.textContent = task.title;
+  taskLi.append(checkIcon);
+  taskLi.append(taskName);
+  taskDescription.textContent = task.description;
+  taskLi.append(taskDescription);
+  dueDate.textContent = task.duedate;
+  taskLi.append(dueDate);
+  taskLi.append(deleteIcon);
+  return { taskLi, deleteIcon, checkIcon };
+}
+
+function createNewTaskBtn() {
+  const newTaskBtn = document.createElement("div");
+  const plusIcon = new Image();
+  const p = document.createElement("p");
+  plusIcon.src = addImg;
+  plusIcon.classList.add("plus-icon");
+  newTaskBtn.append(plusIcon, p);
+  p.textContent = "New task";
+  newTaskBtn.classList.add("new-task-btn");
+  return newTaskBtn;
+}
+
 function updatePage() {
   let projectElements = [];
+
   let projects = getProjects();
+
   const menuProjectList = document.querySelector("#menu-project-list");
+
   const view = document.querySelector("#view");
 
   menuProjectList.innerHTML = "";
+
   projects.forEach((proj) => {
     projectElements.push(projectToDOM(proj));
   });
 
   projectElements.forEach((projObj) => {
-    const newTaskBtn = document.createElement("div");
-    const p = document.createElement("p");
-    p.textContent = "New task";
-    newTaskBtn.append(p);
+    const newTaskBtn = createNewTaskBtn();
 
     newTaskBtn.addEventListener("click", () => {
       newTaskBtn.remove();
-      let taskEditorElements = viewTaskEditor();
+
+      let taskEditorElements = createTaskEditor();
 
       taskEditorElements.addBtn.addEventListener("click", () => {
         taskEditorElements.taskEditor.remove();
         const newTask = taskGenerate(
           taskEditorElements.taskName.value,
-          "xd",
+          taskEditorElements.taskDescription.value,
           "xd"
         );
+
         const newTaskElems = taskToDOM(newTask);
+
         const taskList = document.querySelector("#view-task-list");
+
         const taskDeleteIcon = newTaskElems.deleteIcon;
+
         taskList.append(newTaskElems.taskLi);
+
         view.append(newTaskBtn);
-        console.log(projects[projectElements.indexOf(projObj)]);
+
         storeTaskIntoProject(
           projects[projectElements.indexOf(projObj)],
           newTask
         );
+
         taskDeleteIcon.addEventListener("click", () => {
           newTaskElems.taskLi.remove();
           projects[projectElements.indexOf(projObj)].deleteTask(newTask);
           deleteStoredtask(projects[projectElements.indexOf(projObj)], newTask);
         });
       });
+
       view.append(taskEditorElements.taskEditor);
     });
 
@@ -301,33 +353,15 @@ function updatePage() {
       event.stopPropagation();
       view.innerHTML = "";
       view.appendChild(projObj.projectView);
-      projObj.projectMain.appendChild(newTaskBtn);
+      view.appendChild(newTaskBtn);
     });
+
     projObj.deleteIcon.addEventListener("click", (event) => {
       event.stopPropagation();
       deleteProjects(projects[projectElements.indexOf(projObj)]);
       projObj.menuLi.remove();
       projObj.projectView.remove();
-      viewLoad();
+      view.innerHTML = "";
     });
   });
-}
-
-function taskToDOM(task) {
-  const taskLi = document.createElement("li");
-  const taskName = document.createElement("h4");
-  const taskDescription = document.createElement("h5");
-  const dueDate = document.createElement("h5");
-  const deleteIcon = new Image();
-
-  deleteIcon.src = deleteImg;
-  deleteIcon.classList.add("delete-icon");
-  taskName.textContent = task.title;
-  taskLi.append(taskName);
-  taskDescription.textContent = task.description;
-  taskLi.append(taskDescription);
-  dueDate.textContent = task.duedate;
-  taskLi.append(dueDate);
-  taskLi.append(deleteIcon);
-  return { taskLi, deleteIcon };
 }
