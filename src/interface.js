@@ -216,7 +216,7 @@ function projectToDOM(project) {
   const projectMain = document.createElement("div");
   const h1 = document.createElement("h1");
   const taskList = document.createElement("ul");
-
+  const name = project.name;
   p.textContent = project.name;
   deleteIcon.src = deleteImg;
   projectIcon.src = projectImg;
@@ -253,6 +253,7 @@ function projectToDOM(project) {
     projectMain,
     projectIcon,
     taskList,
+    name,
   };
 }
 
@@ -390,15 +391,16 @@ function updatePage(isNewProjectCreated) {
     obj.menuLi.addEventListener("click", () => {
       view.innerHTML = "";
       view.append(obj.projectView);
-
-      const storedTaskList = getTasks(obj.name);
-      const storedTaskListELems = [];
-
-      storedTaskList.forEach((task) =>
-        storedTaskListELems.push(taskToDOM(task))
-      );
-      storedTaskListELems.forEach((taskObj) => {
-        obj.taskList.append(taskObj.taskLi);
+      const taskList = document.querySelector("#view-task-list");
+      taskList.innerHTML = "";
+      const tasks = getTasks(obj.name);
+      const taskToDOMS = [];
+      tasks.forEach((task) => {
+        taskToDOMS.push(taskToDOM(task));
+      });
+      taskToDOMS.forEach((task) => {
+        task.deleteIcon.remove();
+        taskList.append(task.taskLi);
       });
     });
   });
