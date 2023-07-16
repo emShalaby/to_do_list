@@ -3,23 +3,36 @@
     margin: 0;
     box-sizing: border-box;
 }
+body,html{
+    height: 100vh;
+}
+#content{
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+#header{
+    padding: 1em;
+    display: flex;
+    justify-content: flex-start;
+}
 #main{
     display: grid;
     grid-template-columns: 1fr 5fr;
-    border: solid hotpink 2px;
-}
-
-
-
-#menu{
-    /* for debugging */
-    border: solid 1px black;
-    padding: 1em;
+    height: 100%;  
 }
 
 #view{
-    /* for debugging */
-    border: solid 1px black;
+    background-color: #fefce8;
+}
+
+#menu{
+    padding: 1em;
+    background-color: #854d0e;
+    color: #fefce8;
+}
+
+#view{
     
 }
 
@@ -37,7 +50,6 @@
 }
 #new-project{
     display: flex;
-    border: solid hotpink 2px;
 }
 .delete-icon{
     height: 15px;
@@ -80,7 +92,6 @@ input{
 #view-header{
     display: flex;
     justify-content: center;
-    border-bottom: solid 2px pink;
 }
 
 #view-add-task{
@@ -95,7 +106,6 @@ input{
     grid-template-rows: auto auto auto auto;
     padding: 1em;
     gap: .5em;
-    border: solid 2px red;
     margin: 1em;
 }
 #task-name,#task-description{
@@ -118,7 +128,6 @@ textarea:focus, input:focus{
     gap: 1em;
     margin: 1em 0;
     padding-bottom: 1em;
-    border-bottom: solid 2px hotpink;
 }
 #task-editor-control{
     justify-self: end;
@@ -140,14 +149,15 @@ textarea:focus, input:focus{
     align-items: flex-start;
     gap: .5em;
     margin-bottom: 1em;
-    border-bottom: 2px solid hotpink;
 
 }
 #view-task-list{
     margin-top: 2em;
 }
-#menu>div{
+#menu>*{
     margin-top: 1em;
+
+
 }
 
 .check-icon{
@@ -161,6 +171,8 @@ textarea:focus, input:focus{
 .plus-icon{
     height: 20px;
     width: 20px;
+    color: #e2e8f0;
+
 }
 .new-task-btn{
     display: flex;

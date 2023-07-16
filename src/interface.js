@@ -1,5 +1,4 @@
 import addImg from "./172525_plus_icon.svg";
-import editImg from "./three-dots-punctuation-sign-svgrepo-com.svg";
 import projectImg from "./icons8-project-30.png";
 import deleteImg from "./trash-icon.png";
 import {
@@ -31,15 +30,9 @@ export function pageLoad() {
 
 function headerLoad() {
   const header = document.createElement("div");
-  const h1 = document.createElement("h1");
   const content = document.querySelector("#content");
 
-  h1.textContent = "TO DO LIST";
-  h1.id = "website-title";
-  header.id = "header";
-
   content.appendChild(header);
-  header.appendChild(h1);
 }
 
 // website main
