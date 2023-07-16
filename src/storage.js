@@ -1,5 +1,5 @@
 import { projectGenerate } from "./project";
-import { addWeeks, format, parseISO } from "date-fns";
+import { addWeeks, format } from "date-fns";
 
 export function storeProjects(project) {
   let projects = getProjects();
@@ -81,13 +81,20 @@ export function getThisWeekTasks() {
     project.tasks.forEach((task) => {
       if (
         task.duedate >= format(new Date(), "yyyy-MM-dd") &&
-        task.duedate <= format(addWeeks(new Date(), 1),"yyyy-MM-dd")
+        task.duedate <= format(addWeeks(new Date(), 1), "yyyy-MM-dd")
       )
         thisWeekTasks.push(task);
     });
   });
   return thisWeekTasks;
 }
-
+export function storeInbox(inbox) {
+  localStorage.setItem("inbox", JSON.stringify(inbox));
+}
+export function getInbox() {
+  let inbox =
+    JSON.parse(localStorage.getItem("inbox")) || projectGenerate("inbox", []);
+  return projectGenerate("inbox", inbox.tasks);
+}
 window.getThisWeekTasks = getThisWeekTasks;
 window.addWeeks = addWeeks;

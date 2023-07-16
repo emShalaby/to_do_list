@@ -9,6 +9,7 @@ import { deleteProjects } from "./storage";
 import { taskGenerate } from "./task.js";
 import { storeTaskIntoProject } from "./storage";
 import { deleteStoredtask } from "./storage";
+import { getInbox } from "./storage";
 
 export function pageLoad() {
   headerLoad();
@@ -253,7 +254,7 @@ function projectToDOM(project) {
   projectMain.appendChild(taskList);
   projectHeader.appendChild(h1);
 
-  return { menuLi, projectView, deleteIcon, projectMain };
+  return { menuLi, projectView, deleteIcon, projectMain, projectIcon };
 }
 
 function taskToDOM(task) {
@@ -370,5 +371,20 @@ function updatePage(isNewProjectCreated) {
       projObj.projectView.remove();
       view.innerHTML = "";
     });
+  });
+
+  const inbox = getInbox();
+  const inboxElems = projectToDOM(inbox);
+  const newTaskBtn = createNewTaskBtn();
+  const menu = document.querySelector("#menu");
+  if (document.querySelector("#inbox"))
+    document.querySelector("#inbox").remove();
+  menu.prepend(inboxElems.menuLi);
+  inboxElems.deleteIcon.remove();
+  inboxElems.projectIcon.remove();
+  inboxElems.menuLi.addEventListener("click", () => {
+    view.innerHTML = "";
+    view.append(inboxElems.projectView);
+    inboxElems.projectView.append(newTaskBtn);
   });
 }
