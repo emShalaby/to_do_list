@@ -2,7 +2,12 @@ import addImg from "./172525_plus_icon.svg";
 import editImg from "./three-dots-punctuation-sign-svgrepo-com.svg";
 import projectImg from "./icons8-project-30.png";
 import deleteImg from "./trash-icon.png";
-import { getProjects, getThisWeekTasks, getTodayTasks } from "./storage";
+import {
+  getProjects,
+  getThisWeekTasks,
+  getTodayTasks,
+  storeInbox,
+} from "./storage";
 import { projectGenerate } from "./project";
 import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
@@ -378,8 +383,9 @@ function updatePage(isNewProjectCreated) {
   const thisWeekElems = projectToDOM(thisWeek);
   const todayElems = projectToDOM(today);
   const menuTasksElems = [inboxElems, todayElems, thisWeekElems];
+  
   menuTasks.innerHTML = "";
-
+  inboxElems.projectView.append(newTaskBtn);
   menuTasks.append(inboxElems.menuLi, todayElems.menuLi, thisWeekElems.menuLi);
   menuTasksElems.forEach((obj) => {
     obj.deleteIcon.remove();
@@ -395,9 +401,45 @@ function updatePage(isNewProjectCreated) {
         taskToDOMS.push(taskToDOM(task));
       });
       taskToDOMS.forEach((task) => {
-        task.deleteIcon.remove();
         taskList.append(task.taskLi);
+        if (obj.name == "inbox") return;
+        task.deleteIcon.remove();
       });
     });
+  });
+  
+  newTaskBtn.addEventListener("click", () => {
+    newTaskBtn.remove();
+
+    let taskEditorElements = createTaskEditor();
+
+    taskEditorElements.addBtn.addEventListener("click", () => {
+      taskEditorElements.taskEditor.remove();
+      const newTask = taskGenerate(
+        taskEditorElements.taskName.value,
+        taskEditorElements.taskDescription.value,
+        taskEditorElements.dueDate.value
+      );
+
+      const newTaskElems = taskToDOM(newTask);
+
+      const taskList = document.querySelector("#view-task-list");
+
+      const taskDeleteIcon = newTaskElems.deleteIcon;
+
+      taskList.append(newTaskElems.taskLi);
+
+      view.append(newTaskBtn);
+
+      inbox.addTask(newTask);
+      storeInbox(inbox);
+      taskDeleteIcon.addEventListener("click", () => {
+        newTaskElems.taskLi.remove();
+        inbox.deleteTask(newTask);
+        storeInbox(inbox);
+      });
+    });
+
+    view.append(taskEditorElements.taskEditor);
   });
 }

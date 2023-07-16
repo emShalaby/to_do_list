@@ -64,6 +64,11 @@ export function deleteStoredtask(project, task) {
 export function getTodayTasks() {
   let projects = getProjects();
   let todayTasks = [];
+  let inboxTasks = getInbox().tasks;
+  inboxTasks.forEach((task) => {
+    if (task.duedate == format(new Date(), "yyyy-MM-dd")) todayTasks.push(task);
+  });
+
   projects.forEach((project) => {
     project.tasks.forEach((task) => {
       if (task.duedate == format(new Date(), "yyyy-MM-dd"))
@@ -77,6 +82,14 @@ window.getTodayTasks = getTodayTasks;
 export function getThisWeekTasks() {
   let projects = getProjects();
   let thisWeekTasks = [];
+  let inboxTasks = getInbox().tasks;
+  inboxTasks.forEach((task) => {
+    if (
+      task.duedate >= format(new Date(), "yyyy-MM-dd") &&
+      task.duedate <= format(addWeeks(new Date(), 1), "yyyy-MM-dd")
+    )
+      thisWeekTasks.push(task);
+  });
   projects.forEach((project) => {
     project.tasks.forEach((task) => {
       if (
