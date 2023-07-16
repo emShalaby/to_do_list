@@ -238,7 +238,13 @@ function projectToDOM(project) {
     const taskElement = taskElems.taskLi;
     taskList.append(taskElement);
     const taskDeleteIcon = taskElems.deleteIcon;
+    const checkIcon = taskElems.checkIcon;
     taskDeleteIcon.addEventListener("click", () => {
+      taskElement.remove();
+      project.deleteTask(task);
+      deleteStoredtask(project, task);
+    });
+    checkIcon.addEventListener("click", () => {
       taskElement.remove();
       project.deleteTask(task);
       deleteStoredtask(project, task);
@@ -337,6 +343,8 @@ function updatePage(isNewProjectCreated) {
 
         const taskDeleteIcon = newTaskElems.deleteIcon;
 
+        const checkIcon = newTaskElems.checkIcon;
+
         taskList.append(newTaskElems.taskLi);
 
         view.append(newTaskBtn);
@@ -347,6 +355,11 @@ function updatePage(isNewProjectCreated) {
         );
 
         taskDeleteIcon.addEventListener("click", () => {
+          newTaskElems.taskLi.remove();
+          projects[projectElements.indexOf(projObj)].deleteTask(newTask);
+          deleteStoredtask(projects[projectElements.indexOf(projObj)], newTask);
+        });
+        checkIcon.addEventListener("click", () => {
           newTaskElems.taskLi.remove();
           projects[projectElements.indexOf(projObj)].deleteTask(newTask);
           deleteStoredtask(projects[projectElements.indexOf(projObj)], newTask);
@@ -402,7 +415,19 @@ function updatePage(isNewProjectCreated) {
       });
       taskToDOMS.forEach((task) => {
         taskList.append(task.taskLi);
-        if (obj.name == "inbox") return;
+        if (obj.name == "inbox") {
+          task.deleteIcon.addEventListener("click", () => {
+            task.taskLi.remove();
+            inbox.deleteTask(tasks[taskToDOMS.indexOf(task)]);
+            storeInbox(inbox);
+          });
+          task.checkIcon.addEventListener("click", () => {
+            task.taskLi.remove();
+            inbox.deleteTask(tasks[taskToDOMS.indexOf(task)]);
+            storeInbox(inbox);
+          });
+          return;
+        }
         task.deleteIcon.remove();
         task.checkIcon.remove();
       });
@@ -428,6 +453,8 @@ function updatePage(isNewProjectCreated) {
 
       const taskDeleteIcon = newTaskElems.deleteIcon;
 
+      const checkIcon = newTaskElems.checkIcon;
+
       taskList.append(newTaskElems.taskLi);
 
       view.append(newTaskBtn);
@@ -435,6 +462,11 @@ function updatePage(isNewProjectCreated) {
       inbox.addTask(newTask);
       storeInbox(inbox);
       taskDeleteIcon.addEventListener("click", () => {
+        newTaskElems.taskLi.remove();
+        inbox.deleteTask(newTask);
+        storeInbox(inbox);
+      });
+      checkIcon.addEventListener("click", () => {
         newTaskElems.taskLi.remove();
         inbox.deleteTask(newTask);
         storeInbox(inbox);
