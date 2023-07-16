@@ -197,7 +197,7 @@ function createTaskEditor() {
   otherProps.appendChild(dueDate);
   controlBtns.appendChild(cancel);
   controlBtns.appendChild(addBtn);
-  return { taskEditor, addBtn, taskName, taskDescription, dueDate };
+  return { taskEditor, addBtn, taskName, taskDescription, dueDate, cancel };
 }
 
 function projectToDOM(project) {
@@ -299,7 +299,7 @@ function updatePage(isNewProjectCreated) {
   const menuProjectList = document.querySelector("#menu-project-list");
 
   const view = document.querySelector("#view");
-
+  view.innerHTML = "";
   menuProjectList.innerHTML = "";
 
   projects.forEach((proj) => {
@@ -318,9 +318,13 @@ function updatePage(isNewProjectCreated) {
       );
     }
     newTaskBtn.addEventListener("click", () => {
-      newTaskBtn.remove();
-
       let taskEditorElements = createTaskEditor();
+      view.removeChild(newTaskBtn);
+      taskEditorElements.cancel.addEventListener("click", () => {
+        taskEditorElements.taskEditor.remove();
+        view.append(newTaskBtn);
+        return;
+      });
 
       taskEditorElements.addBtn.addEventListener("click", () => {
         taskEditorElements.taskEditor.remove();
@@ -428,10 +432,15 @@ function updatePage(isNewProjectCreated) {
   });
 
   newTaskBtn.addEventListener("click", () => {
-    newTaskBtn.remove();
-
     let taskEditorElements = createTaskEditor();
+    let pageProjectView = document.querySelector(".project-view");
+    pageProjectView.removeChild(newTaskBtn);
 
+    taskEditorElements.cancel.addEventListener("click", () => {
+      pageProjectView.append(newTaskBtn);
+      taskEditorElements.taskEditor.remove();
+      return;
+    });
     taskEditorElements.addBtn.addEventListener("click", () => {
       taskEditorElements.taskEditor.remove();
       const newTask = taskGenerate(
