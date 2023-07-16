@@ -2,7 +2,7 @@ import addImg from "./172525_plus_icon.svg";
 import editImg from "./three-dots-punctuation-sign-svgrepo-com.svg";
 import projectImg from "./icons8-project-30.png";
 import deleteImg from "./trash-icon.png";
-import { getProjects } from "./storage";
+import { getProjects, getThisWeekTasks, getTodayTasks } from "./storage";
 import { projectGenerate } from "./project";
 import { storeProjects } from "./storage";
 import { deleteProjects } from "./storage";
@@ -10,6 +10,7 @@ import { taskGenerate } from "./task.js";
 import { storeTaskIntoProject } from "./storage";
 import { deleteStoredtask } from "./storage";
 import { getInbox } from "./storage";
+import { getTasks } from "./storage";
 
 export function pageLoad() {
   headerLoad();
@@ -64,16 +65,13 @@ function footerLoad() {
 function menuLoad() {
   const menu = document.createElement("div");
   const menuProjects = document.createElement("div");
-  const menuTasks = document.createElement("div");
+  const menuTasks = document.createElement("ul");
   const ul = document.createElement("ul");
   const projectsHeader = document.createElement("div");
   const newProjectDiv = document.createElement("div");
   const h5 = document.createElement("h5");
   const img = new Image();
   const main = document.querySelector("#main");
-  const inbox = document.createElement("div");
-  const today = document.createElement("div");
-  const thisWeek = document.createElement("div");
 
   menu.id = "menu";
   menuProjects.id = "menu-projects";
@@ -84,17 +82,11 @@ function menuLoad() {
   projectsHeader.id = "menu-projects-header";
   img.src = addImg;
   newProjectDiv.id = "new-project";
-  inbox.id = "inbox";
-  today.id = "today";
-  thisWeek.id = "this-week";
-  inbox.textContent = "Inbox";
-  today.textContent = "Today";
-  thisWeek.textContent = "This week";
 
   main.append(menu);
 
   menuProjects.appendChild(ul);
-  menu.append(inbox, today, thisWeek, menuProjects);
+  menu.append(menuTasks, menuProjects);
   menuProjects.prepend(projectsHeader);
   projectsHeader.appendChild(h5);
   projectsHeader.appendChild(newProjectDiv);
@@ -254,7 +246,14 @@ function projectToDOM(project) {
   projectMain.appendChild(taskList);
   projectHeader.appendChild(h1);
 
-  return { menuLi, projectView, deleteIcon, projectMain, projectIcon };
+  return {
+    menuLi,
+    projectView,
+    deleteIcon,
+    projectMain,
+    projectIcon,
+    taskList,
+  };
 }
 
 function taskToDOM(task) {
@@ -376,15 +375,31 @@ function updatePage(isNewProjectCreated) {
   const inbox = getInbox();
   const inboxElems = projectToDOM(inbox);
   const newTaskBtn = createNewTaskBtn();
-  const menu = document.querySelector("#menu");
-  if (document.querySelector("#inbox"))
-    document.querySelector("#inbox").remove();
-  menu.prepend(inboxElems.menuLi);
-  inboxElems.deleteIcon.remove();
-  inboxElems.projectIcon.remove();
-  inboxElems.menuLi.addEventListener("click", () => {
-    view.innerHTML = "";
-    view.append(inboxElems.projectView);
-    inboxElems.projectView.append(newTaskBtn);
+  const menuTasks = document.querySelector("#menu-tasks");
+  const thisWeek = projectGenerate("This week", getThisWeekTasks());
+  const today = projectGenerate("Today", getTodayTasks());
+  const thisWeekElems = projectToDOM(thisWeek);
+  const todayElems = projectToDOM(today);
+  const menuTasksElems = [inboxElems, todayElems, thisWeekElems];
+  menuTasks.innerHTML = "";
+
+  menuTasks.append(inboxElems.menuLi, todayElems.menuLi, thisWeekElems.menuLi);
+  menuTasksElems.forEach((obj) => {
+    obj.deleteIcon.remove();
+    obj.projectIcon.remove();
+    obj.menuLi.addEventListener("click", () => {
+      view.innerHTML = "";
+      view.append(obj.projectView);
+
+      const storedTaskList = getTasks(obj.name);
+      const storedTaskListELems = [];
+
+      storedTaskList.forEach((task) =>
+        storedTaskListELems.push(taskToDOM(task))
+      );
+      storedTaskListELems.forEach((taskObj) => {
+        obj.taskList.append(taskObj.taskLi);
+      });
+    });
   });
 }

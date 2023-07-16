@@ -98,3 +98,9 @@ export function getInbox() {
 }
 window.getThisWeekTasks = getThisWeekTasks;
 window.addWeeks = addWeeks;
+
+export function getTasks(name) {
+  if (name == "This week") return getThisWeekTasks;
+  else if (name == "Today") return getTodayTasks();
+  else return getInbox().tasks;
+}
