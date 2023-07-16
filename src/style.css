@@ -64,7 +64,7 @@ body,html{
 #menu-project-list{
     margin-top: .5em;
 }
-#menu-project-list>li{
+#menu-project-list>li,#menu-tasks>li{
     display: flex;
     flex: 1;
     align-items: center;
@@ -149,6 +149,9 @@ textarea:focus, input:focus{
     align-items: flex-start;
     gap: .5em;
     margin-bottom: 1em;
+    border-bottom: 1px solid  hotpink;
+    padding-bottom: 1em;
+    background-color: ;
 
 }
 #view-task-list{

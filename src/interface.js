@@ -67,15 +67,15 @@ function menuLoad() {
   const ul = document.createElement("ul");
   const projectsHeader = document.createElement("div");
   const newProjectDiv = document.createElement("div");
-  const h5 = document.createElement("h5");
+  const h3 = document.createElement("h3");
   const img = new Image();
   const main = document.querySelector("#main");
 
   menu.id = "menu";
   menuProjects.id = "menu-projects";
   menuTasks.id = "menu-tasks";
-  h5.id = "projects-title";
-  h5.textContent = "Projects";
+  h3.id = "projects-title";
+  h3.textContent = "Projects";
   ul.id = "menu-project-list";
   projectsHeader.id = "menu-projects-header";
   img.src = addImg;
@@ -86,7 +86,7 @@ function menuLoad() {
   menuProjects.appendChild(ul);
   menu.append(menuTasks, menuProjects);
   menuProjects.prepend(projectsHeader);
-  projectsHeader.appendChild(h5);
+  projectsHeader.appendChild(h3);
   projectsHeader.appendChild(newProjectDiv);
   newProjectDiv.appendChild(img);
 
@@ -202,7 +202,7 @@ function createTaskEditor() {
 
 function projectToDOM(project) {
   const menuLi = document.createElement("li");
-  const p = document.createElement("p");
+  const h3 = document.createElement("h3");
   const projectIcon = new Image();
   const deleteIcon = new Image();
   const projectView = document.createElement("div");
@@ -211,7 +211,7 @@ function projectToDOM(project) {
   const h1 = document.createElement("h1");
   const taskList = document.createElement("ul");
   const name = project.name;
-  p.textContent = project.name;
+  h3.textContent = project.name;
   deleteIcon.src = deleteImg;
   projectIcon.src = projectImg;
   menuLi.id = "menu-" + project.name;
@@ -221,7 +221,7 @@ function projectToDOM(project) {
   projectHeader.classList.add("view-project-header");
   projectMain.classList.add("project-main");
   taskList.id = "view-task-list";
-  menuLi.append(projectIcon, p, deleteIcon);
+  menuLi.append(projectIcon, h3, deleteIcon);
 
   h1.textContent = project.name;
   projectView.append(projectHeader, projectMain);
@@ -261,7 +261,7 @@ function taskToDOM(task) {
   const taskLi = document.createElement("li");
   const taskName = document.createElement("h4");
   const taskDescription = document.createElement("h5");
-  const dueDate = document.createElement("h5");
+  const dueDate = document.createElement("h6");
   const deleteIcon = new Image();
   const checkIcon = document.createElement("div");
 
@@ -468,4 +468,5 @@ function updatePage(isNewProjectCreated) {
 
     view.append(taskEditorElements.taskEditor);
   });
+  if (!isNewProjectCreated) view.append(inboxElems.projectView);
 }
