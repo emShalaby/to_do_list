@@ -172,7 +172,6 @@ function createTaskEditor() {
   const taskName = document.createElement("input");
   const taskDescription = document.createElement("input");
   const dueDate = document.createElement("input");
-  const priority = document.createElement("button");
   const addBtn = document.createElement("button");
   const cancel = document.createElement("button");
   const otherProps = document.createElement("div");
@@ -184,10 +183,8 @@ function createTaskEditor() {
   taskName.value = "Task name";
   taskDescription.value = "Description";
   dueDate.id = "due-date";
-  priority.id = "priority";
   dueDate.textContent = "Due date";
   dueDate.type = "date";
-  priority.textContent = "Priority";
   addBtn.id = "task-editor-add";
   cancel.id = "task-editor-cancel";
   addBtn.textContent = "Add";
@@ -200,7 +197,6 @@ function createTaskEditor() {
   taskEditor.appendChild(otherProps);
   taskEditor.appendChild(controlBtns);
   otherProps.appendChild(dueDate);
-  otherProps.appendChild(priority);
   controlBtns.appendChild(cancel);
   controlBtns.appendChild(addBtn);
   return { taskEditor, addBtn, taskName, taskDescription, dueDate };
