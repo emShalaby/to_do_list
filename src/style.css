@@ -85,6 +85,7 @@ body,html{
 }
 input{
     margin-bottom: 2em;
+    background-color: #fef9c3;
 }
 #view{
     padding: 5em;
@@ -107,7 +108,10 @@ input{
     padding: 1em;
     gap: .5em;
     margin: 1em;
+    background-color: #fef9c3;
+    border: solid 1px black;
 }
+
 #task-name,#task-description{
     padding: 0;
     margin: 0;
