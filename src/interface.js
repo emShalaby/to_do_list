@@ -383,7 +383,7 @@ function updatePage(isNewProjectCreated) {
   const thisWeekElems = projectToDOM(thisWeek);
   const todayElems = projectToDOM(today);
   const menuTasksElems = [inboxElems, todayElems, thisWeekElems];
-  
+
   menuTasks.innerHTML = "";
   inboxElems.projectView.append(newTaskBtn);
   menuTasks.append(inboxElems.menuLi, todayElems.menuLi, thisWeekElems.menuLi);
@@ -404,10 +404,11 @@ function updatePage(isNewProjectCreated) {
         taskList.append(task.taskLi);
         if (obj.name == "inbox") return;
         task.deleteIcon.remove();
+        task.checkIcon.remove();
       });
     });
   });
-  
+
   newTaskBtn.addEventListener("click", () => {
     newTaskBtn.remove();
 
