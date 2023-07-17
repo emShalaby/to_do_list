@@ -28,13 +28,11 @@ body,html{
 
 #menu{
     padding: 1em;
-    background-color: #854d0e;
-    color: #fefce8;
+    background-color: #b91c1c;
+    color: #fee2e2;
 }
 
-#view{
-    
-}
+
 
 #menu-projects-header{
     display: flex;
@@ -85,7 +83,8 @@ body,html{
 }
 input{
     margin-bottom: 2em;
-    background-color: #fef9c3;
+    background-color: #fefce8;
+
 }
 #view{
     padding: 5em;
@@ -108,7 +107,8 @@ input{
     padding: 1em;
     gap: .5em;
     margin: 1em;
-    background-color: #fef9c3;
+    background-color: #fefce8;
+
     border: solid 1px black;
 }
 
@@ -131,7 +131,7 @@ textarea:focus, input:focus{
     display: flex;
     gap: 1em;
     margin: 1em 0;
-    padding-bottom: 1em;
+    border-bottom: solid 1px black;
 }
 #task-editor-control{
     justify-self: end;
@@ -184,4 +184,8 @@ textarea:focus, input:focus{
 .new-task-btn{
     display: flex;
     gap: .1em;
+}
+
+#menu-tasks>li:hover{
+    background-color: #7f1d1d;
 }
