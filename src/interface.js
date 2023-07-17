@@ -434,7 +434,7 @@ function updatePage(isNewProjectCreated) {
   newTaskBtn.addEventListener("click", () => {
     let taskEditorElements = createTaskEditor();
     let pageProjectView = document.querySelector(".project-view");
-    pageProjectView.removeChild(newTaskBtn);
+    document.querySelector(".new-task-btn").remove();
 
     taskEditorElements.cancel.addEventListener("click", () => {
       pageProjectView.append(newTaskBtn);
