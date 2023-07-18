@@ -6,6 +6,7 @@ export function storeProjects(project) {
   projects.push(project);
   localStorage.setItem("projects", JSON.stringify(projects));
 }
+
 export function deleteProjects(project) {
   let projects = Array.from(JSON.parse(localStorage.getItem("projects")) || []);
   projects.forEach((proj) => {
@@ -28,16 +29,7 @@ export function getProjects() {
   return projects;
 }
 
-export function getProjectByName(name) {
-  let projects = getProjects();
-  let returnProject = {};
-  projects.forEach((project) => {
-    if (project.name == name) {
-      returnProject = project;
-    }
-  });
-  return returnProject;
-}
+
 
 export function storeTaskIntoProject(project, task) {
   let projects = getProjects();
