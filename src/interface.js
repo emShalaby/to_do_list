@@ -6,15 +6,18 @@ import {
   getThisWeekTasks,
   getTodayTasks,
   storeInbox,
+  storeProjects,
+  deleteProjects,
+  storeTaskIntoProject,
+  getInbox,
+  deleteStoredtask,
+  getTasks
 } from "./storage";
+
 import { projectGenerate } from "./project";
-import { storeProjects } from "./storage";
-import { deleteProjects } from "./storage";
+
 import { taskGenerate } from "./task.js";
-import { storeTaskIntoProject } from "./storage";
-import { deleteStoredtask } from "./storage";
-import { getInbox } from "./storage";
-import { getTasks } from "./storage";
+
 
 export function pageLoad() {
   headerLoad();
@@ -41,8 +44,6 @@ function mainLoad() {
   const main = document.createElement("div");
 
   const content = document.querySelector("#content");
-  const projects = getProjects();
-  projects.forEach((proj) => projectToDOM(proj));
 
   main.id = "main";
 
@@ -134,7 +135,6 @@ function newProjectModal() {
   const input = document.createElement("input");
   const submitBtn = document.createElement("button");
   const label = document.createElement("label");
-  const view = document.querySelector("#view");
 
   modal.id = "new-project-modal";
   input.id = "new-project-name";
@@ -155,9 +155,7 @@ function newProjectModal() {
   submitBtn.addEventListener("click", () => {
     let projects = getProjects();
     let projectNames = [];
-    projects.forEach((project) => {
-      projectNames.push(project.name);
-    });
+    projectNames=projects.map((project)=> project.name)
     if (projectNames.includes(input.value)) return;
     storeProjects(projectGenerate(input.value, []));
     modal.style.display = "none";
