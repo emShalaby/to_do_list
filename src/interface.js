@@ -1,6 +1,7 @@
 import addImg from "./172525_plus_icon.svg";
 import projectImg from "./icons8-project-30.png";
 import deleteImg from "./trash-icon.png";
+import { createNewTaskBtn, createTaskEditor } from "./newTask.js";
 import {
   getProjects,
   getThisWeekTasks,
@@ -11,13 +12,12 @@ import {
   storeTaskIntoProject,
   getInbox,
   deleteStoredtask,
-  getTasks
+  getTasks,
 } from "./storage";
 
 import { projectGenerate } from "./project";
 
 import { taskGenerate } from "./task.js";
-
 
 export function pageLoad() {
   headerLoad();
@@ -155,47 +155,12 @@ function newProjectModal() {
   submitBtn.addEventListener("click", () => {
     let projects = getProjects();
     let projectNames = [];
-    projectNames=projects.map((project)=> project.name)
+    projectNames = projects.map((project) => project.name);
     if (projectNames.includes(input.value)) return;
     storeProjects(projectGenerate(input.value, []));
     modal.style.display = "none";
     updatePage(true);
   });
-}
-
-function createTaskEditor() {
-  const taskEditor = document.createElement("div");
-  const taskName = document.createElement("input");
-  const taskDescription = document.createElement("input");
-  const dueDate = document.createElement("input");
-  const addBtn = document.createElement("button");
-  const cancel = document.createElement("button");
-  const otherProps = document.createElement("div");
-  const controlBtns = document.createElement("div");
-
-  taskEditor.id = "task-editor";
-  taskName.id = "task-name";
-  taskDescription.id = "task-description";
-  taskName.value = "Task name";
-  taskDescription.value = "Description";
-  dueDate.id = "due-date";
-  dueDate.textContent = "Due date";
-  dueDate.type = "date";
-  addBtn.id = "task-editor-add";
-  cancel.id = "task-editor-cancel";
-  addBtn.textContent = "Add";
-  cancel.textContent = "Cancel";
-  otherProps.id = "task-editor-other";
-  controlBtns.id = "task-editor-control";
-
-  taskEditor.appendChild(taskName);
-  taskEditor.appendChild(taskDescription);
-  taskEditor.appendChild(otherProps);
-  taskEditor.appendChild(controlBtns);
-  otherProps.appendChild(dueDate);
-  controlBtns.appendChild(cancel);
-  controlBtns.appendChild(addBtn);
-  return { taskEditor, addBtn, taskName, taskDescription, dueDate, cancel };
 }
 
 function projectToDOM(project) {
@@ -275,18 +240,6 @@ function taskToDOM(task) {
   taskLi.append(dueDate);
   taskLi.append(deleteIcon);
   return { taskLi, deleteIcon, checkIcon };
-}
-
-function createNewTaskBtn() {
-  const newTaskBtn = document.createElement("div");
-  const plusIcon = new Image();
-  const p = document.createElement("p");
-  plusIcon.src = addImg;
-  plusIcon.classList.add("plus-icon");
-  newTaskBtn.append(plusIcon, p);
-  p.textContent = "New task";
-  newTaskBtn.classList.add("new-task-btn");
-  return newTaskBtn;
 }
 
 function updatePage(isNewProjectCreated) {
@@ -414,6 +367,7 @@ function updatePage(isNewProjectCreated) {
           task.deleteIcon.addEventListener("click", () => {
             task.taskLi.remove();
             inbox.deleteTask(tasks[taskToDOMS.indexOf(task)]);
+            console.log(inbox);
             storeInbox(inbox);
           });
           task.checkIcon.addEventListener("click", () => {
