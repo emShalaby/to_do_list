@@ -29,8 +29,6 @@ export function getProjects() {
   return projects;
 }
 
-
-
 export function storeTaskIntoProject(project, task) {
   let projects = getProjects();
   projects.forEach((proj) => deleteProjects(proj));
@@ -54,45 +52,32 @@ export function deleteStoredtask(project, task) {
 }
 
 export function getTodayTasks() {
-  let projects = getProjects();
+  let projectsTasks = getProjects().tasks | [];
   let todayTasks = [];
   let inboxTasks = getInbox().tasks;
-  inboxTasks.forEach((task) => {
-    if (task.duedate == format(new Date(), "yyyy-MM-dd")) todayTasks.push(task);
+  // adds inboxTasks and porjectsTasks together and filters them
+  todayTasks = inboxTasks.concat(projectsTasks).filter((task) => {
+    return task.duedate == format(new Date(), "yyyy-MM-dd");
   });
 
-  projects.forEach((project) => {
-    project.tasks.forEach((task) => {
-      if (task.duedate == format(new Date(), "yyyy-MM-dd"))
-        todayTasks.push(task);
-    });
-  });
   return todayTasks;
 }
 window.getTodayTasks = getTodayTasks;
 
 export function getThisWeekTasks() {
-  let projects = getProjects();
+  let projectsTasks = getProjects().tasks | [];
   let thisWeekTasks = [];
   let inboxTasks = getInbox().tasks;
-  inboxTasks.forEach((task) => {
-    if (
+  thisWeekTasks = inboxTasks.concat(projectsTasks).filter((task) => {
+    return (
       task.duedate >= format(new Date(), "yyyy-MM-dd") &&
       task.duedate <= format(addWeeks(new Date(), 1), "yyyy-MM-dd")
-    )
-      thisWeekTasks.push(task);
+    );
   });
-  projects.forEach((project) => {
-    project.tasks.forEach((task) => {
-      if (
-        task.duedate >= format(new Date(), "yyyy-MM-dd") &&
-        task.duedate <= format(addWeeks(new Date(), 1), "yyyy-MM-dd")
-      )
-        thisWeekTasks.push(task);
-    });
-  });
+
   return thisWeekTasks;
 }
+
 export function storeInbox(inbox) {
   localStorage.setItem("inbox", JSON.stringify(inbox));
 }
@@ -101,8 +86,6 @@ export function getInbox() {
     JSON.parse(localStorage.getItem("inbox")) || projectGenerate("inbox", []);
   return projectGenerate("inbox", inbox.tasks);
 }
-window.getThisWeekTasks = getThisWeekTasks;
-window.addWeeks = addWeeks;
 
 export function getTasks(name) {
   if (name == "This week") return getThisWeekTasks();
