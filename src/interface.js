@@ -1,6 +1,6 @@
 import addImg from "./172525_plus_icon.svg";
-import projectImg from "./icons8-project-30.png";
-import deleteImg from "./trash-icon.png";
+  
+import { projectToDOM, taskToDOM } from "./mediator.js";
 import { createNewTaskBtn, createTaskEditor } from "./newTask.js";
 import {
   getProjects,
@@ -129,118 +129,6 @@ function viewLoad() {
 }
 
 //modal for adding a new project
-
-function newProjectModal() {
-  const modal = document.createElement("div");
-  const input = document.createElement("input");
-  const submitBtn = document.createElement("button");
-  const label = document.createElement("label");
-
-  modal.id = "new-project-modal";
-  input.id = "new-project-name";
-  input.type = "text";
-  input.name = "new-project-name";
-  submitBtn.type = "submit";
-  submitBtn.id = "new-project-submit";
-  submitBtn.textContent = "Create";
-  label.for = input.name;
-  label.innerHTML = "<b>Name</b>";
-
-  modal.appendChild(label);
-  modal.appendChild(input);
-  modal.appendChild(submitBtn);
-  content.appendChild(modal);
-  modal.style.display = "none";
-
-  submitBtn.addEventListener("click", () => {
-    let projects = getProjects();
-    let projectNames = [];
-    projectNames = projects.map((project) => project.name);
-    if (projectNames.includes(input.value)) return;
-    storeProjects(projectGenerate(input.value, []));
-    modal.style.display = "none";
-    updatePage(true);
-  });
-}
-
-function projectToDOM(project) {
-  const menuLi = document.createElement("li");
-  const h3 = document.createElement("h3");
-  const projectIcon = new Image();
-  const deleteIcon = new Image();
-  const projectView = document.createElement("div");
-  const projectHeader = document.createElement("div");
-  const projectMain = document.createElement("div");
-  const h1 = document.createElement("h1");
-  const taskList = document.createElement("ul");
-  const name = project.name;
-  h3.textContent = project.name;
-  deleteIcon.src = deleteImg;
-  projectIcon.src = projectImg;
-  menuLi.id = "menu-" + project.name;
-  projectIcon.classList.add("project-icon");
-  deleteIcon.classList.add("delete-icon");
-  projectView.classList.add("project-view");
-  projectHeader.classList.add("view-project-header");
-  projectMain.classList.add("project-main");
-  taskList.id = "view-task-list";
-  menuLi.append(projectIcon, h3, deleteIcon);
-
-  h1.textContent = project.name;
-  projectView.append(projectHeader, projectMain);
-
-  project.tasks.forEach((task) => {
-    const taskElems = taskToDOM(task);
-    const taskElement = taskElems.taskLi;
-    taskList.append(taskElement);
-    const taskDeleteIcon = taskElems.deleteIcon;
-    const checkIcon = taskElems.checkIcon;
-    taskDeleteIcon.addEventListener("click", () => {
-      taskElement.remove();
-      project.deleteTask(task);
-      deleteStoredtask(project, task);
-    });
-    checkIcon.addEventListener("click", () => {
-      taskElement.remove();
-      project.deleteTask(task);
-      deleteStoredtask(project, task);
-    });
-  });
-  projectMain.appendChild(taskList);
-  projectHeader.appendChild(h1);
-
-  return {
-    menuLi,
-    projectView,
-    deleteIcon,
-    projectMain,
-    projectIcon,
-    taskList,
-    name,
-  };
-}
-
-function taskToDOM(task) {
-  const taskLi = document.createElement("li");
-  const taskName = document.createElement("h4");
-  const taskDescription = document.createElement("h5");
-  const dueDate = document.createElement("h6");
-  const deleteIcon = new Image();
-  const checkIcon = document.createElement("div");
-
-  checkIcon.classList.add("check-icon");
-  deleteIcon.src = deleteImg;
-  deleteIcon.classList.add("delete-icon");
-  taskName.textContent = task.title;
-  taskLi.append(checkIcon);
-  taskLi.append(taskName);
-  taskDescription.textContent = task.description;
-  taskLi.append(taskDescription);
-  dueDate.textContent = task.duedate;
-  taskLi.append(dueDate);
-  taskLi.append(deleteIcon);
-  return { taskLi, deleteIcon, checkIcon };
-}
 
 function updatePage(isNewProjectCreated) {
   let projectElements = [];
@@ -430,4 +318,37 @@ function updatePage(isNewProjectCreated) {
     view.append(taskEditorElements.taskEditor);
   });
   if (!isNewProjectCreated) view.append(inboxElems.projectView);
+}
+
+function newProjectModal() {
+  const modal = document.createElement("div");
+  const input = document.createElement("input");
+  const submitBtn = document.createElement("button");
+  const label = document.createElement("label");
+
+  modal.id = "new-project-modal";
+  input.id = "new-project-name";
+  input.type = "text";
+  input.name = "new-project-name";
+  submitBtn.type = "submit";
+  submitBtn.id = "new-project-submit";
+  submitBtn.textContent = "Create";
+  label.for = input.name;
+  label.innerHTML = "<b>Name</b>";
+
+  modal.appendChild(label);
+  modal.appendChild(input);
+  modal.appendChild(submitBtn);
+  content.appendChild(modal);
+  modal.style.display = "none";
+
+  submitBtn.addEventListener("click", () => {
+    let projects = getProjects();
+    let projectNames = [];
+    projectNames = projects.map((project) => project.name);
+    if (projectNames.includes(input.value)) return;
+    storeProjects(projectGenerate(input.value, []));
+    modal.style.display = "none";
+    updatePage(true);
+  });
 }
